@@ -1,10 +1,6 @@
 package sample.model;
 
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /*  Användarnamn: c5dv202_vt19_c17sal
     Databas:      c5dv202_vt19_c17sal
@@ -55,6 +51,18 @@ public class Database {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             //System.out.println(e.getMessage());
+        }
+    }
+
+    public void getSomething() {
+        String sqlSelect = "SELECT name FROM program";
+        try {
+            ResultSet rs = statement.executeQuery(sqlSelect);
+            while(rs.next()) {
+                System.out.println(rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
