@@ -51,7 +51,8 @@ public class Program {
 
     @Override
     public String toString() {
-        return "Name: " + name + " Category: " + category + " Editor: " + editor;
+        return "Name: " + name + " Category: " + category + " Editor: " +
+                editor + " hej";
 
     }
 }

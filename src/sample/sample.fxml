@@ -32,7 +32,7 @@
       </MenuBar>
    </top>
    <center>
-      <TableView fx:id="tableView" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableView" onMouseClicked="#getDoubleClickedProgram" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="programColumn" prefWidth="200.0" resizable="false" text="Program" />
           <TableColumn fx:id="categoryColumn" prefWidth="200.0" resizable="false" text="Category" />
