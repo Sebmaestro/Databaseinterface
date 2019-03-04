@@ -13,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import sample.model.Broadcast;
 import sample.model.Database;
 import sample.model.Program;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -40,6 +43,7 @@ public class Controller {
         database.setChannelNames();
         database.setCategoryPairs();
 
+        /*
         ObservableList<Program> obList = database.getProgramsFromChannel("P3");
 
         for (Program p :obList) {
@@ -55,10 +59,24 @@ public class Controller {
             System.out.println(b);
         }
         System.out.println("Idiot2");
-
+        */
 
 
     }
+
+
+    @FXML
+    private void getDoubleClickedProgram() {
+
+        tableView.setOnMouseClicked((MouseEvent event) -> {
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
+                System.out.println(tableView.getSelectionModel().getSelectedItem());
+                Program p = tableView.getSelectionModel().getSelectedItem();
+                System.out.println(p.getId());
+            }
+        });
+    }
+
 
     @FXML
     public void initMenu() {
@@ -70,7 +88,6 @@ public class Controller {
             item.setOnAction(event -> { //Här är lamnda :)
                 ObservableList<Program> programs = database
                         .getProgramsFromChannel(item.getText());
-
 
                 programColumn.setCellValueFactory(new
                         PropertyValueFactory<>("name"));
