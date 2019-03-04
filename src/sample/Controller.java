@@ -1,10 +1,13 @@
 package sample;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import sample.model.Broadcast;
 import sample.model.Database;
+import sample.model.Program;
 
 import java.io.PrintStream;
 import java.net.URL;
@@ -19,12 +22,18 @@ public class Controller {
         database = new Database();
         database.setChannelNames();
         database.setCategoryPairs();
-        System.out.println(database.getProgramsFromChannel("P3"));
 
-        System.out.println("bög");
-        System.out.println("gay");
-
-        int i = 911;
+        ObservableList<Program> obList = database.getProgramsFromChannel("P3");
+        for (Program p :obList) {
+            System.out.println(p);
+        }
+        System.out.println("idiot");
+        Program p = obList.get(2);
+        ObservableList<Broadcast> obList2 = database.getBroadcastFromProgram(p.getId(), p.getName());
+        for(Broadcast b : obList2){
+            System.out.println(b);
+        }
+        System.out.println("Idiot2");
     }
 
     @FXML

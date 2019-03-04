@@ -7,7 +7,10 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.sql.*;
+
+
+import java.util.Date;
+
 
 /*  Användarnamn: c5dv202_vt19_c17sal
     Databas:      c5dv202_vt19_c17sal
@@ -114,10 +117,11 @@ public class Database {
         }
     }
 
-    public ArrayList<String> getProgramsFromChannel(String channelName) {
+    public ObservableList<Program> getProgramsFromChannel(String channelName) {
         int channelId = channelNamesId.get(channelName);
+
         ObservableList<Program> programs = FXCollections.observableArrayList();
-        ArrayList<String> progNames = new ArrayList<>();
+
         try {
             statement = connection.createStatement();
             String query = "SELECT name, category, editor, tagline, email, " +
@@ -127,9 +131,6 @@ public class Database {
 
             ResultSet resultSet = statement.executeQuery(query);
             while(resultSet.next()){
-                String resString = resultSet.getString(1);
-                progNames.add(resString);
-
                 String name = resultSet.getString(1);
                 int categoryId = resultSet.getInt(2);
                 String category = categoryIdNames.get(categoryId);
@@ -147,8 +148,31 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(programs);
+        return programs;
+    }
 
-        return progNames;
+    public ObservableList<Broadcast> getBroadcastFromProgram(int programId, String programName){
+        ObservableList<Broadcast> broadcasts = FXCollections.observableArrayList();
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT tagline, broadcast_date, duration, image_url, broadcast_id " +
+                    "FROM broadcast " +
+                    "WHERE program = " + programId;
+            ResultSet resultSet = statement.executeQuery(query);
+            while(resultSet.next()){
+                String tagline = resultSet.getString(1);
+                Date date = resultSet.getTimestamp(2);
+                int duration = resultSet.getInt(3);
+                String url = resultSet.getString(4);
+                int id = resultSet.getInt(5);
+
+                Broadcast b = new Broadcast(programName, tagline, date, duration, url, id);
+                broadcasts.add(b);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return broadcasts;
     }
 }
