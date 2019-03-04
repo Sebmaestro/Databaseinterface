@@ -10,6 +10,9 @@ public class Controller {
 
     public Controller() {
         database = new Database();
+        database.setChannelNames();
+        database.setCategoryPairs();
+        System.out.println(database.getProgramsFromChannel("P3"));
     }
 
 
