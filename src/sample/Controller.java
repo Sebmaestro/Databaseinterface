@@ -4,15 +4,20 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import sample.model.Broadcast;
 import sample.model.Database;
 import sample.model.Program;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -50,6 +55,9 @@ public class Controller {
             System.out.println(b);
         }
         System.out.println("Idiot2");
+
+
+
     }
 
     @FXML
@@ -82,5 +90,18 @@ public class Controller {
     @FXML
     public void setTextArea() {
         textArea.setText("Han dog");
+    }
+
+    public void pressedButton(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("test2.fxml"));
+        try {
+            Parent root = (Parent)loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
