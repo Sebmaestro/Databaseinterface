@@ -71,6 +71,10 @@ public class Database {
         }
     }
 
+    public ArrayList<String> getChannelNames() {
+        return channelNames;
+    }
+
     /**
      * Adds all current channel-names to the list and pairs every
      * channel-name with the corresponding channel-id in the hashmap.

@@ -10,16 +10,13 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
-   <center>
-      <TextArea fx:id="textArea" prefHeight="200.0" prefWidth="200.0" text="Bgs specca Johan E" BorderPane.alignment="CENTER" />
-   </center>
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
+          <Menu fx:id="channels" mnemonicParsing="false" onMenuValidation="#initMenu" text="Channels">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Channels" />
+               </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
@@ -34,7 +31,13 @@
         </menus>
       </MenuBar>
    </top>
-   <left>
-      <Button mnemonicParsing="false" onAction="#setTextArea" text="Vad hände sen?" BorderPane.alignment="CENTER" />
-   </left>
+   <center>
+      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn prefWidth="200.0" resizable="false" text="C1" />
+          <TableColumn prefWidth="200.0" resizable="false" text="C2" />
+            <TableColumn prefWidth="200.0" resizable="false" text="Column X" />
+        </columns>
+      </TableView>
+   </center>
 </BorderPane>
