@@ -114,10 +114,11 @@ public class Database {
         }
     }
 
-    public ArrayList<String> getProgramsFromChannel(String channelName) {
+    public ObservableList<Program> getProgramsFromChannel(String channelName) {
         int channelId = channelNamesId.get(channelName);
+
         ObservableList<Program> programs = FXCollections.observableArrayList();
-        ArrayList<String> progNames = new ArrayList<>();
+
         try {
             statement = connection.createStatement();
             String query = "SELECT name, category, editor, tagline, email, " +
@@ -128,7 +129,6 @@ public class Database {
             ResultSet resultSet = statement.executeQuery(query);
             while(resultSet.next()){
                 String resString = resultSet.getString(1);
-                progNames.add(resString);
 
                 String name = resultSet.getString(1);
                 int categoryId = resultSet.getInt(2);
@@ -147,8 +147,11 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(programs);
+        return programs;
+    }
 
-        return progNames;
+    public ObservableList<Broadcast> getBroadcastFromProgram(int programId){
+        ObservableList<Broadcast> broadcasts = FXCollections.observableArrayList();
+        return broadcasts;
     }
 }

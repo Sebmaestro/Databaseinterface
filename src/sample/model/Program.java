@@ -19,4 +19,9 @@ public class Program {
         this.email = email;
         this.url = url;
     }
+
+    @Override
+    public String toString() {
+        return "Name: " + name + " Category: " + category + " Editor: " + editor;
+    }
 }
