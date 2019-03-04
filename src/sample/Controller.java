@@ -73,6 +73,7 @@ public class Controller {
                 System.out.println(tableView.getSelectionModel().getSelectedItem());
                 Program p = tableView.getSelectionModel().getSelectedItem();
                 System.out.println(p.getId());
+                openBroadcastPopup();
             }
         });
     }
@@ -109,8 +110,8 @@ public class Controller {
         textArea.setText("Han dog");
     }
 
-    public void pressedButton(){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("test2.fxml"));
+    public void openBroadcastPopup(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("popup.fxml"));
         try {
             Parent root = (Parent)loader.load();
             Stage stage = new Stage();
