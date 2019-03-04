@@ -27,6 +27,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static java.lang.Thread.sleep;
+
 public class Controller {
     private Database database;
 
@@ -73,7 +75,8 @@ public class Controller {
                 System.out.println(tableView.getSelectionModel().getSelectedItem());
                 Program p = tableView.getSelectionModel().getSelectedItem();
                 System.out.println(p.getId());
-                openBroadcastPopup();
+                openBroadcastPopup(database.getBroadcastFromProgram(p.getId(),
+                        p.getName()));
             }
         });
     }
@@ -110,13 +113,20 @@ public class Controller {
         textArea.setText("Han dog");
     }
 
-    public void openBroadcastPopup(){
+    public void openBroadcastPopup(ObservableList<Broadcast> broadcasts){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("popup.fxml"));
+
         try {
+
+
             Parent root = (Parent)loader.load();
+            PopupController pop = loader.getController();
+            pop.setBroadcasts(broadcasts);
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
