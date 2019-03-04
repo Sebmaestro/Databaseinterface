@@ -1,6 +1,7 @@
 package sample.model;
 
 public class Program {
+
     private String name;
     private String category;
     private String editor;
@@ -18,6 +19,14 @@ public class Program {
         this.tagline = tagline;
         this.email = email;
         this.url = url;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

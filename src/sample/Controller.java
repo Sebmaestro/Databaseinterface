@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import sample.model.Broadcast;
 import sample.model.Database;
 import sample.model.Program;
 
@@ -26,6 +27,13 @@ public class Controller {
         for (Program p :obList) {
             System.out.println(p);
         }
+        System.out.println("idiot");
+        Program p = obList.get(2);
+        ObservableList<Broadcast> obList2 = database.getBroadcastFromProgram(p.getId(), p.getName());
+        for(Broadcast b : obList2){
+            System.out.println(b);
+        }
+        System.out.println("Idiot2");
     }
 
     @FXML
