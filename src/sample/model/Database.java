@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.sql.*;
 
 /*  Användarnamn: c5dv202_vt19_c17sal
     Databas:      c5dv202_vt19_c17sal
