@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
 import sample.model.Broadcast;
 import sample.model.Database;
 import sample.model.Program;
@@ -23,6 +24,10 @@ public class Controller {
 
     @FXML private TextArea textArea;
     @FXML private Menu channels;
+    @FXML private TableView<Program> tableView;
+    @FXML private TableColumn<Program, String> programColumn;
+    @FXML private TableColumn<Program, String> categoryColumn;
+    @FXML private TableColumn<Program, String> editorColumn;
 
 
     public Controller() {
@@ -54,11 +59,20 @@ public class Controller {
         for (String s : channelNames) {
             MenuItem item = new MenuItem();
             item.setText(s);
-            item.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    System.out.println();
-                }
+            item.setOnAction(event -> { //Här är lamnda :)
+                ObservableList<Program> programs = database
+                        .getProgramsFromChannel(item.getText());
+
+
+                programColumn.setCellValueFactory(new
+                        PropertyValueFactory<>("name"));
+                categoryColumn.setCellValueFactory(new
+                        PropertyValueFactory<>("category"));
+                editorColumn.setCellValueFactory(new
+                        PropertyValueFactory<>("editor"));
+
+                tableView.getItems().setAll(programs);
+
             });
             channels.getItems().add(item);
         }

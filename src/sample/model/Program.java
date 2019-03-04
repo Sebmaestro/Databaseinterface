@@ -29,8 +29,29 @@ public class Program {
         return name;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public String getEditor() {
+        return editor;
+    }
+
+    public String getTagline() {
+        return tagline;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
     @Override
     public String toString() {
         return "Name: " + name + " Category: " + category + " Editor: " + editor;
+
     }
 }

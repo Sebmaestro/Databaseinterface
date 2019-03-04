@@ -11,7 +11,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
+      <MenuBar prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <menus>
           <Menu fx:id="channels" mnemonicParsing="false" onMenuValidation="#initMenu" text="Channels">
                <items>
@@ -32,12 +32,22 @@
       </MenuBar>
    </top>
    <center>
-      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableView" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="200.0" resizable="false" text="C1" />
-          <TableColumn prefWidth="200.0" resizable="false" text="C2" />
-            <TableColumn prefWidth="200.0" resizable="false" text="Column X" />
+          <TableColumn fx:id="programColumn" prefWidth="200.0" resizable="false" text="Program" />
+          <TableColumn fx:id="categoryColumn" prefWidth="200.0" resizable="false" text="Category" />
+            <TableColumn fx:id="editorColumn" prefWidth="200.0" resizable="false" text="Editor" />
         </columns>
       </TableView>
    </center>
+   <bottom>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" BorderPane.alignment="CENTER">
+         <left>
+            <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </bottom>
 </BorderPane>
