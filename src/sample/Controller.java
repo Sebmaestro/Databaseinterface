@@ -23,6 +23,13 @@ public class Controller {
         System.out.println("tjena");
         System.out.println("bong");
         System.out.println("big");
+
+
+
+        System.out.println("lalalalal");
+        System.out.println("go");
+
+        int x = 112;
     }
 
     @FXML
