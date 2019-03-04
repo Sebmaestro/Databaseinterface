@@ -20,6 +20,9 @@ public class Controller {
         database.setChannelNames();
         database.setCategoryPairs();
         System.out.println(database.getProgramsFromChannel("P3"));
+        System.out.println("tjena");
+        System.out.println("bong");
+        System.out.println("big");
     }
 
     @FXML
