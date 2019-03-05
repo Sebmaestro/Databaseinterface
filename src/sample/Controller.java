@@ -38,6 +38,7 @@ public class Controller {
     @FXML private TableColumn<Program, String> programColumn;
     @FXML private TableColumn<Program, String> categoryColumn;
     @FXML private TableColumn<Program, String> editorColumn;
+    @FXML private TextField channelTextField;
 
 
     public Controller() {
@@ -101,6 +102,7 @@ public class Controller {
                         PropertyValueFactory<>("editor"));
 
                 tableView.getItems().setAll(programs);
+                channelTextField.setText(item.getText());
 
             });
             channels.getItems().add(item);

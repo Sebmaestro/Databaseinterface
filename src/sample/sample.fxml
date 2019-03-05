@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -14,10 +15,13 @@
    <children>
       <TableView fx:id="tableView" layoutY="50.0" onMouseClicked="#getDoubleClickedProgram" prefHeight="682.0" prefWidth="756.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
          <columns>
-            <TableColumn fx:id="programColumn" prefWidth="200.0" resizable="false" text="Program" />
-            <TableColumn fx:id="categoryColumn" prefWidth="200.0" resizable="false" text="Category" />
-            <TableColumn fx:id="editorColumn" prefWidth="200.0" resizable="false" text="Editor" />
+            <TableColumn fx:id="programColumn" prefWidth="250.0" resizable="false" text="Program" />
+            <TableColumn fx:id="categoryColumn" prefWidth="250.0" resizable="false" text="Category" />
+            <TableColumn fx:id="editorColumn" prefWidth="255.0" resizable="false" text="Editor" />
          </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
       <MenuBar layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="754.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <menus>
@@ -38,6 +42,10 @@
             </Menu>
          </menus>
       </MenuBar>
-      <TextField layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="754.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <TextField fx:id="channelTextField" alignment="CENTER" editable="false" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="754.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>
