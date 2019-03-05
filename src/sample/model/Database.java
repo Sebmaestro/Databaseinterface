@@ -6,10 +6,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-
+import java.util.*;
 import java.util.Date;
 
 
@@ -166,9 +163,19 @@ public class Database {
             ResultSet resultSet = statement.executeQuery(query);
             while(resultSet.next()){
                 String tagline = resultSet.getString(1);
-                Timestamp timestamp = resultSet.getTimestamp(2);
-                String dateString = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss").format(timestamp);
-                int duration = resultSet.getInt(3);
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
+                Timestamp timestamp = resultSet.getTimestamp(2, calendar);
+                SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+                String dateString = formatter.format(timestamp);
+
+
+                long durationTime = resultSet.getInt(3) * 1000;
+                formatter = new SimpleDateFormat("HH:mm:ss");
+                formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+                String duration = formatter.format(new Date(durationTime));
                 String url = resultSet.getString(4);
                 int id = resultSet.getInt(5);
 

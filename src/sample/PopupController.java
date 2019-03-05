@@ -15,7 +15,7 @@ public class PopupController {
     @FXML
     private TableColumn<Broadcast, String> dateColumn;
     @FXML
-    private TableColumn<Broadcast, Integer> durationColumn;
+    private TableColumn<Broadcast, String> durationColumn;
     private ObservableList<Broadcast> broadcasts;
 
     public PopupController(){
