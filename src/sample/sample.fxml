@@ -9,45 +9,35 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
-   <top>
-      <MenuBar prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-        <menus>
-          <Menu fx:id="channels" mnemonicParsing="false" onMenuValidation="#initMenu" text="Channels">
+
+<AnchorPane pickOnBounds="false" prefHeight="731.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <TableView fx:id="tableView" layoutY="50.0" onMouseClicked="#getDoubleClickedProgram" prefHeight="682.0" prefWidth="756.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
+         <columns>
+            <TableColumn fx:id="programColumn" prefWidth="200.0" resizable="false" text="Program" />
+            <TableColumn fx:id="categoryColumn" prefWidth="200.0" resizable="false" text="Category" />
+            <TableColumn fx:id="editorColumn" prefWidth="200.0" resizable="false" text="Editor" />
+         </columns>
+      </TableView>
+      <MenuBar layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="754.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <menus>
+            <Menu fx:id="channels" mnemonicParsing="false" onMenuValidation="#initMenu" text="Channels">
                <items>
                   <MenuItem mnemonicParsing="false" text="Channels" />
                </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Delete" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="About" />
+               </items>
+            </Menu>
+         </menus>
       </MenuBar>
-   </top>
-   <center>
-      <TableView fx:id="tableView" onMouseClicked="#getDoubleClickedProgram" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn fx:id="programColumn" prefWidth="200.0" resizable="false" text="Program" />
-          <TableColumn fx:id="categoryColumn" prefWidth="200.0" resizable="false" text="Category" />
-            <TableColumn fx:id="editorColumn" prefWidth="200.0" resizable="false" text="Editor" />
-        </columns>
-      </TableView>
-   </center>
-   <bottom>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" BorderPane.alignment="CENTER">
-         <left>
-            <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
-         </left>
-         <right>
-            <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
-         </right>
-      </BorderPane>
-   </bottom>
-</BorderPane>
+      <TextField layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="754.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+   </children>
+</AnchorPane>

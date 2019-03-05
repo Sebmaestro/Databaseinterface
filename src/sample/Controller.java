@@ -70,7 +70,7 @@ public class Controller {
     @FXML
     private void getDoubleClickedProgram() {
 
-        tableView.setOnMouseClicked((MouseEvent event) -> {
+        tableView.setOnMouseClicked((MouseEvent event) -> { //Här är lamnda :)
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
                 System.out.println(tableView.getSelectionModel().getSelectedItem());
                 Program p = tableView.getSelectionModel().getSelectedItem();
