@@ -32,13 +32,20 @@ import static java.lang.Thread.sleep;
 public class Controller {
     private Database database;
 
-    @FXML private TextArea textArea;
-    @FXML private Menu channels;
-    @FXML private TableView<Program> tableView;
-    @FXML private TableColumn<Program, String> programColumn;
-    @FXML private TableColumn<Program, String> categoryColumn;
-    @FXML private TableColumn<Program, String> editorColumn;
-    @FXML private TextField channelTextField;
+    @FXML
+    private TextArea textArea;
+    @FXML
+    private Menu channels;
+    @FXML
+    private TableView<Program> tableView;
+    @FXML
+    private TableColumn<Program, String> programColumn;
+    @FXML
+    private TableColumn<Program, String> categoryColumn;
+    @FXML
+    private TableColumn<Program, String> editorColumn;
+    @FXML
+    private TextField channelTextField;
 
 
     public Controller() {
@@ -119,14 +126,14 @@ public class Controller {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("popup.fxml"));
 
         try {
+            Parent root = loader.load();
 
-
-            Parent root = (Parent)loader.load();
             PopupController pop = loader.getController();
             pop.setBroadcasts(broadcasts);
+            pop.setTableValues();
+
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-
             stage.show();
 
         } catch (IOException e) {

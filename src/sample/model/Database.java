@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -165,12 +166,13 @@ public class Database {
             ResultSet resultSet = statement.executeQuery(query);
             while(resultSet.next()){
                 String tagline = resultSet.getString(1);
-                Date date = resultSet.getTimestamp(2);
+                Timestamp timestamp = resultSet.getTimestamp(2);
+                String dateString = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss").format(timestamp);
                 int duration = resultSet.getInt(3);
                 String url = resultSet.getString(4);
                 int id = resultSet.getInt(5);
 
-                Broadcast b = new Broadcast(programName, tagline, date, duration, url, id);
+                Broadcast b = new Broadcast(programName, tagline, dateString, duration, url, id);
                 broadcasts.add(b);
             }
         } catch (SQLException e) {

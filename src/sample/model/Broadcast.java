@@ -1,20 +1,18 @@
 package sample.model;
 
 
-import java.util.Date;
-
 public class Broadcast {
     private String programName;
     private String tagline;
-    private Date date;
+    private String date;
     private int duration;
     private String imageURL;
     private int id;
 
-    public Broadcast(String programName, String tagline, Date date, int duration, String imageURL, int id) {
+    public Broadcast(String programName, String tagline, String dateString, int duration, String imageURL, int id) {
         this.programName = programName;
         this.tagline = tagline;
-        this.date = date;
+        this.date = dateString;
         this.duration = duration;
         this.imageURL = imageURL;
         this.id = id;
@@ -24,5 +22,13 @@ public class Broadcast {
     @Override
     public String toString() {
         return "Programname: " + programName + " Date: " + date + " Tagline: " + tagline;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public int getDuration() {
+        return duration;
     }
 }
