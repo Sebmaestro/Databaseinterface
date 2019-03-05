@@ -1,16 +1,11 @@
 package sample;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseButton;
@@ -20,20 +15,12 @@ import sample.model.Database;
 import sample.model.Program;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
-
-import static java.lang.Thread.sleep;
 
 public class Controller {
     private Database database;
+    private boolean wasInit;
 
-    @FXML
-    private TextArea textArea;
     @FXML
     private Menu channels;
     @FXML
@@ -52,26 +39,7 @@ public class Controller {
         database = new Database();
         database.setChannelNames();
         database.setCategoryPairs();
-
-        /*
-        ObservableList<Program> obList = database.getProgramsFromChannel("P3");
-
-        for (Program p :obList) {
-            System.out.println(p);
-        }
-
-        System.out.println("idiot");
-        Program p = obList.get(2);
-
-        ObservableList<Broadcast> obList2 = database.getBroadcastFromProgram(p.getId(), p.getName());
-
-        for(Broadcast b : obList2){
-            System.out.println(b);
-        }
-        System.out.println("Idiot2");
-        */
-
-
+        wasInit = false;
     }
 
 
@@ -80,9 +48,7 @@ public class Controller {
 
         tableView.setOnMouseClicked((MouseEvent event) -> { //Här är lamnda :)
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
-                System.out.println(tableView.getSelectionModel().getSelectedItem());
                 Program p = tableView.getSelectionModel().getSelectedItem();
-                System.out.println(p.getId());
                 openBroadcastPopup(database.getBroadcastFromProgram(p.getId(),
                         p.getName()));
             }
@@ -92,48 +58,61 @@ public class Controller {
 
     @FXML
     public void initMenu() {
-        ArrayList<String> channelNames = database.getChannelNames();
 
-        for (String s : channelNames) {
-            MenuItem item = new MenuItem();
-            item.setText(s);
-            item.setOnAction(event -> { //Här är lamnda :)
-                ObservableList<Program> programs = database
-                        .getProgramsFromChannel(item.getText());
+        if (!wasInit) {
+            ArrayList<String> channelNames = database.getChannelNames();
 
-                programColumn.setCellValueFactory(new
-                        PropertyValueFactory<>("name"));
-                categoryColumn.setCellValueFactory(new
-                        PropertyValueFactory<>("category"));
-                editorColumn.setCellValueFactory(new
-                        PropertyValueFactory<>("editor"));
+            for (String s : channelNames) {
+                MenuItem item = new MenuItem();
+                item.setText(s);
+                item.setOnAction(event -> { //Här är lamnda igen :)
+                    ObservableList<Program> programs = database
+                            .getProgramsFromChannel(item.getText());
 
-                tableView.getItems().setAll(programs);
-                channelTextField.setText(item.getText());
+                    programColumn.setCellValueFactory(new
+                            PropertyValueFactory<>("name"));
+                    categoryColumn.setCellValueFactory(new
+                            PropertyValueFactory<>("category"));
+                    editorColumn.setCellValueFactory(new
+                            PropertyValueFactory<>("editor"));
 
-            });
-            channels.getItems().add(item);
+                    tableView.getItems().setAll(programs);
+                    channelTextField.setText(item.getText());
+
+                });
+                channels.getItems().add(item);
+            }
+            wasInit = true;
         }
     }
 
+    public void openAddProgramPopup() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource
+                ("addProgram.fxml"));
 
-    @FXML
-    public void setTextArea() {
-        textArea.setText("Han dog");
+        try {
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void openBroadcastPopup(ObservableList<Broadcast> broadcasts){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("popup.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("broadcast.fxml"));
 
         try {
             Parent root = loader.load();
 
-            PopupController pop = loader.getController();
+            BroadcastController pop = loader.getController();
             pop.setBroadcasts(broadcasts);
             pop.setTableValues();
 
             Stage stage = new Stage();
-            stage.setScene(new Scene(root));
+            stage.setScene(new Scene(root, 520,900));
             stage.show();
 
         } catch (IOException e) {

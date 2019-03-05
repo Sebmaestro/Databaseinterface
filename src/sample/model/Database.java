@@ -73,6 +73,10 @@ public class Database {
         return channelNames;
     }
 
+    public HashMap<Integer, String> getCategorys() {
+        return categoryIdNames;
+    }
+
     /**
      * Adds all current channel-names to the list and pairs every
      * channel-name with the corresponding channel-id in the hashmap.

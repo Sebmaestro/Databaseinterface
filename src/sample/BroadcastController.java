@@ -9,7 +9,7 @@ import sample.model.Broadcast;
 
 import java.util.Date;
 
-public class PopupController {
+public class BroadcastController {
     @FXML
     private TableView<Broadcast> tableViewPopup;
     @FXML
@@ -18,7 +18,7 @@ public class PopupController {
     private TableColumn<Broadcast, String> durationColumn;
     private ObservableList<Broadcast> broadcasts;
 
-    public PopupController(){
+    public BroadcastController(){
         System.out.println("started");
 
     }
