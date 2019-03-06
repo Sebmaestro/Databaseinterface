@@ -192,4 +192,81 @@ public class Database {
 
         return broadcasts;
     }
+
+
+    public void createTriggerFunction(){
+        try {
+            statement = connection.createStatement();
+            String query = "DROP TRIGGER IF EXISTS broadcast_trigger ON broadcast";
+            statement.executeUpdate(query);
+
+
+
+            statement = connection.createStatement();
+            query = "CREATE OR REPLACE FUNCTION broadcast_trigger_func() " +
+                    "RETURNS trigger AS " +
+                    "$func$" +
+                    "BEGIN " +
+                    "IF ((SELECT COUNT(broadcast_id) " +
+                    "FROM program JOIN broadcast ON program.program_id = broadcast.program " +
+                    "WHERE (program.channel = " +
+                    "(SELECT channel " +
+                    "FROM program " +
+                    "WHERE program_id = NEW.program) AND " +
+                    "broadcast_date <= NEW.broadcast_date AND " +
+                    "broadcast_date + INTERVAL '1 seconds' * duration > NEW.broadcast_date)" +
+                    ") > 0) THEN RAISE EXCEPTION 'Invalid date';" +
+                    "END IF;" +
+                    "IF ((SELECT COUNT(broadcast_id) " +
+                    "FROM program JOIN broadcast ON program.program_id = broadcast.program " +
+                    "WHERE (program.channel = " +
+                    "(SELECT channel " +
+                    "FROM program " +
+                    "WHERE program_id = NEW.program) AND " +
+                    "broadcast_date < NEW.broadcast_date + INTERVAL '1 seconds' * NEW.duration AND " +
+                    "broadcast_date >= NEW.broadcast_date)" +
+                    ") > 0) THEN RAISE EXCEPTION 'Invalid date2';" +
+                    "END IF;" +
+                    "RETURN NEW;" +
+                    "END " +
+                    "$func$ LANGUAGE plpgsql";
+            statement.executeUpdate(query);
+
+            System.out.println("xd");
+
+            statement= connection.createStatement();
+            query = "CREATE TRIGGER broadcast_trigger " +
+                    "BEFORE INSERT ON broadcast " +
+                    "FOR EACH ROW EXECUTE PROCEDURE broadcast_trigger_func()";
+            statement.executeUpdate(query);
+
+            System.out.println("xd2");
+
+
+            //TODO REMOVE THIS TEST
+            statement = connection.createStatement();
+            query = "INSERT INTO broadcast VALUES(674401,99,'HAHAHAHHAHA 20181207 06:30','2019-09-03T04:02:00Z',1800,'https://static-cdn.sr.se/sida/images/99/2580947_512_512.jpg?preset=api-default-square')";
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void dropTrigger(){
+        try {
+            statement = connection.createStatement();
+            String query = "DROP TRIGGER IF EXISTS broadcast_trigger ON broadcast";
+            statement.executeUpdate(query);
+
+
+            statement = connection.createStatement();
+            query = "DROP FUNCTION IF EXISTS broadcast_trigger_func()";
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
