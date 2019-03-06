@@ -8,9 +8,10 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AddProgramController">
    <children>
-      <ComboBox fx:id="channelCombo" layoutX="14.0" layoutY="14.0" prefWidth="150.0" promptText="Channel" AnchorPane.topAnchor="14.0" />
-      <ComboBox fx:id="categoryCombo" layoutX="170.0" layoutY="14.0" prefWidth="150.0" promptText="Category" AnchorPane.topAnchor="14.0" />
-      <TextField fx:id="insertProgramTextField" layoutX="331.0" layoutY="14.0" promptText="Program name" AnchorPane.topAnchor="14.0" />
-      <Button fx:id="addProgramButton" layoutX="275.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" text="Add" AnchorPane.bottomAnchor="14.0" />
+      <ComboBox fx:id="channelCombo" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="113.0" promptText="Channel" AnchorPane.topAnchor="14.0" />
+      <ComboBox fx:id="categoryCombo" layoutX="136.0" layoutY="14.0" prefHeight="25.0" prefWidth="113.0" promptText="Category" AnchorPane.topAnchor="14.0" />
+      <TextField fx:id="insertProgramTextField" layoutX="252.0" layoutY="14.0" promptText="Program name" AnchorPane.topAnchor="14.0" />
+      <Button fx:id="addProgramButton" layoutX="275.0" layoutY="361.0" mnemonicParsing="false" onAction="#setAddProgramButton" prefHeight="25.0" prefWidth="51.0" text="Add" AnchorPane.bottomAnchor="14.0" />
+      <TextField fx:id="insertEditorTextField" layoutX="415.0" layoutY="14.0" promptText="Editor" />
    </children>
 </AnchorPane>

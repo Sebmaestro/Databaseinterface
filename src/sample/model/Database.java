@@ -26,8 +26,12 @@ public class Database {
     private Statement statement;
 
     private ArrayList<String> channelNames;
+    private ArrayList<String> categoryNames;
+
     private HashMap<Integer, String> categoryIdNames;
     private HashMap<String, Integer> channelNamesId;
+
+    private HashMap<String, Integer> sebbesHashMap;
 
     /**
      * Constructor: Will initialize the database
@@ -36,8 +40,10 @@ public class Database {
         getDriver();
         connectToDatabase();
         channelNames = new ArrayList<>();
+        categoryNames = new ArrayList<>();
         channelNamesId = new HashMap<>();
         categoryIdNames = new HashMap<>();
+        sebbesHashMap = new HashMap<>();
     }
 
     /**
@@ -73,8 +79,16 @@ public class Database {
         return channelNames;
     }
 
-    public HashMap<Integer, String> getCategorys() {
-        return categoryIdNames;
+    public ArrayList<String> getCategoryNames() {
+        return categoryNames;
+    }
+
+    public HashMap<String, Integer> getCategoryIdNames() {
+        return sebbesHashMap;
+    }
+
+    public HashMap<String, Integer> getChannelNamesId() {
+        return channelNamesId;
     }
 
     /**
@@ -114,7 +128,10 @@ public class Database {
             while(resultSet.next()){
                 String resString = resultSet.getString(1);
                 int resInt = resultSet.getInt(2);
+                categoryNames.add(resString);
                 categoryIdNames.put(resInt, resString);
+                sebbesHashMap.put(resString, resInt);
+                int i = 5;
             }
 
             System.out.println(categoryIdNames);
@@ -123,6 +140,11 @@ public class Database {
         }
     }
 
+    /**
+     *
+     * @param channelName
+     * @return
+     */
     public ObservableList<Program> getProgramsFromChannel(String channelName) {
         int channelId = channelNamesId.get(channelName);
 
@@ -157,6 +179,12 @@ public class Database {
         return programs;
     }
 
+    /**
+     *
+     * @param programId
+     * @param programName
+     * @return
+     */
     public ObservableList<Broadcast> getBroadcastFromProgram(int programId, String programName){
         ObservableList<Broadcast> broadcasts = FXCollections.observableArrayList();
         try {
@@ -191,6 +219,45 @@ public class Database {
         }
 
         return broadcasts;
+    }
+
+    public void addProgram(int channelxd, int categoryxd, String editorxd,
+                           String namexd, String channel){
+
+        try {
+            int primaryKey = 0;
+            statement = connection.createStatement();
+
+            String selectQuery = "SELECT MAX(p.program_id)" +
+            "FROM program p";
+
+            ResultSet resultSet = statement.executeQuery(selectQuery);
+
+            while(resultSet.next()) {
+                primaryKey = resultSet.getInt(1);
+            }
+
+            String insertQuery = "INSERT INTO program(program_id, name, editor, " +
+                    "channel, category)" +
+                    " VALUES(?,?,?,?,?)";
+
+            connection.setAutoCommit(false);
+            PreparedStatement p = connection.prepareStatement(insertQuery);
+            p.setInt(1, primaryKey+1);
+            p.setString(2, namexd);
+            p.setString(3, editorxd);
+            p.setInt(4, channelxd);
+            p.setInt(5, categoryxd);
+            p.executeUpdate();
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteProgramAndBroadcasts() {
+
     }
 
 

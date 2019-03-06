@@ -92,12 +92,29 @@ public class Controller {
 
         try {
             Parent root = loader.load();
+
+
+            AddProgramController big = loader.getController();
+            big.init();
+
+
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void deleteProgram() {
+
+        Program p = tableView.getSelectionModel().getSelectedItem();
+        System.out.println(tableView.getSelectionModel().getSelectedItem());
+        if (p == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Please choose a program before deletion");
+            alert.showAndWait();
         }
     }
 
