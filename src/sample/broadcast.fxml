@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="672.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BroadcastController">
    <children>
-      <TableView fx:id="tableViewPopup" layoutX="103.0" layoutY="52.0" prefHeight="348.0" prefWidth="672.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
+      <TableView fx:id="tableViewPopup" layoutX="103.0" layoutY="52.0" prefHeight="300.0" prefWidth="672.0" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
         <columns>
           <TableColumn fx:id="dateColumn" prefWidth="250.0" text="Date" />
           <TableColumn fx:id="durationColumn" minWidth="0.0" prefWidth="250.0" text="Duration" />
@@ -38,5 +38,10 @@
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font></TextField>
+      <HBox alignment="CENTER" layoutX="199.0" layoutY="355.0" prefHeight="45.0" prefWidth="275.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="198.0">
+         <children>
+            <Button mnemonicParsing="false" text="Add Broadcast" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
