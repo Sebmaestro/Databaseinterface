@@ -420,11 +420,17 @@ public class Database {
             statement = connection.createStatement();
             String query =
                     "UPDATE program " +
-                            "SET name = "+name+", category = "+sebbesHashMap
-                            .get(category)+", editor = "+editor+ " WHERE " +
-                            "program_id = "+program.getId();
+                            "SET name = ?, category = ?, editor = ?" +
+                            "WHERE program_id = ?";
 
-            statement.executeUpdate(query);
+            connection.setAutoCommit(false);
+            PreparedStatement p = connection.prepareStatement(query);
+            p.setString(1, name);
+            p.setInt(2, sebbesHashMap.get(category));
+            p.setString(3, editor);
+            p.setInt(4, program.getId());
+            p.executeUpdate();
+            connection.commit();
 
             program.setCategory(category);
             program.setEditor(editor);
@@ -447,12 +453,13 @@ public class Database {
             statement = connection.createStatement();
             String query = "UPDATE broadcast " +
                     "SET broadcast_date = ?, duration = ? " +
-                    "WHERE broadcast_id = "+broadcast.getId();
+                    "WHERE broadcast_id = ?";
 
             connection.setAutoCommit(false);
             PreparedStatement p = connection.prepareStatement(query);
             p.setTimestamp(1, broadcast_date);
             p.setInt(2, duration);
+            p.setInt(3, broadcast.getId());
             p.executeUpdate();
             connection.commit();
 

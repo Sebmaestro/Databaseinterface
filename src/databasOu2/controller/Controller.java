@@ -1,5 +1,6 @@
 package databasOu2.controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,6 +37,7 @@ public class Controller implements Initializable{
     private TableColumn<Program, String> editorColumn;
     @FXML
     private TextField channelTextField;
+
 
 
     public Controller() {
@@ -112,9 +114,7 @@ public class Controller implements Initializable{
         Program p = tableView.getSelectionModel().getSelectedItem();
         System.out.println(tableView.getSelectionModel().getSelectedItem());
         if (p == null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Please choose a program before deletion");
-            alert.showAndWait();
+            showPopupMessage("Please choose a program before deletion");
         } else {
             database.deleteProgramAndBroadcasts(p.getId());
             tableView.getItems().remove(p);
@@ -149,18 +149,36 @@ public class Controller implements Initializable{
 
 
         try {
-            Parent root = loader.load();
 
-            EditProgramController edit = new EditProgramController();
-            edit.setTable(tableView);
+            if (tableView.getSelectionModel().getSelectedItem() == null) {
+                showPopupMessage("Please choose a program before editing");
+            } else {
+                Parent root = loader.load();
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+                EditProgramController edit = loader.getController();
+                edit.setProgram(tableView.getSelectionModel().getSelectedItem());
+                edit.setTable(tableView);
+
+                ObservableList<String> categoryObservable = FXCollections
+                        .observableArrayList();
+                categoryObservable.addAll(database.getCategoryNames());
+
+                edit.setCategoryList(categoryObservable);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showPopupMessage(String str) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(str);
+        alert.showAndWait();
     }
 
 
