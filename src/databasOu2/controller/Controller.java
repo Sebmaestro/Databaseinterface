@@ -141,7 +141,26 @@ public class Controller implements Initializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public void openEditProgram(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource
+                ("/databasOu2/view/editProgram.fxml"));
+
+
+        try {
+            Parent root = loader.load();
+
+            EditProgramController edit = new EditProgramController();
+            edit.setTable(tableView);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

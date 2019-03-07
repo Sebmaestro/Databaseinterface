@@ -76,7 +76,7 @@ public class AddBroadcastController implements Initializable{
     }
 
     private void showPopupMessage(String str) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText(str);
         alert.showAndWait();
     }

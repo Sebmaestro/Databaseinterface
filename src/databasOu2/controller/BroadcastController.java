@@ -1,14 +1,12 @@
 package databasOu2.controller;
 
+import databasOu2.model.Database;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import databasOu2.model.Broadcast;
@@ -33,13 +31,16 @@ public class BroadcastController {
 
     private ObservableList<Broadcast> broadcasts;
 
+    private Broadcast broadcast;
+
     private Program program;
+
+    private Database database;
 
     public BroadcastController(){
         System.out.println("started");
 
-
-
+        database = new Database();
     }
 
     public void setProgram(Program program){
@@ -82,6 +83,21 @@ public class BroadcastController {
             e.printStackTrace();
         }
     }
+
+
+    public void deleteBroadcast() {
+        broadcast = tableViewPopup.getSelectionModel().getSelectedItem();
+        System.out.println(tableViewPopup.getSelectionModel().getSelectedItem());
+        if (broadcast == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Please choose a broadcast before deletion");
+            alert.showAndWait();
+        } else {
+            database.deleteOnlyBroadcast(broadcast.getId());
+            tableViewPopup.getItems().remove(broadcast);
+        }
+    }
+
 
 
 }

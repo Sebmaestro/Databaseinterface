@@ -300,8 +300,19 @@ public class Database {
 
     }
 
-    public void deleteOnlyBroadcast() {
+    public void deleteOnlyBroadcast(int broadcastID) {
+        try {
+            statement = connection.createStatement();
 
+            String deleteQuery =
+                    "DELETE FROM broadcast" +
+                            " WHERE broadcast_id = "+broadcastID;
+
+            statement.executeUpdate(deleteQuery);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -401,8 +412,27 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    public void editProgram(Program program, String name, String category,
+                            String editor) {
+        try {
+            statement = connection.createStatement();
+            String query =
+                    "UPDATE program " +
+                            "SET name = "+name+", category = "+sebbesHashMap
+                            .get(category)+", editor = "+editor+ " WHERE " +
+                            "program_id = "+program.getId();
 
+            statement.executeUpdate(query);
+
+            program.setCategory(category);
+            program.setEditor(editor);
+            program.setName(name);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void dropTrigger(){

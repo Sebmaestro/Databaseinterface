@@ -24,6 +24,10 @@ public class Broadcast {
         return "Programname: " + programName + " Date: " + date + " Duration: " + duration;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getDate() {
         return date;
     }

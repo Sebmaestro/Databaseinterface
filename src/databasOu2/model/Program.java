@@ -49,6 +49,18 @@ public class Program {
         return url;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
+
     @Override
     public String toString() {
         return "Name: " + name + " Category: " + category + " Editor: " +
