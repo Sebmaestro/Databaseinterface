@@ -24,7 +24,7 @@
       </TableView>
       <MenuBar layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="754.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <menus>
-            <Menu fx:id="channels" mnemonicParsing="false" onMenuValidation="#initMenu" text="Channels">
+            <Menu fx:id="channels" mnemonicParsing="false" text="Channels">
                <items>
                   <MenuItem mnemonicParsing="false" text="Channels" />
                </items>

@@ -34,7 +34,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TextField alignment="CENTER" editable="false" layoutY="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <TextField fx:id="programTextField" alignment="CENTER" editable="false" layoutY="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font></TextField>

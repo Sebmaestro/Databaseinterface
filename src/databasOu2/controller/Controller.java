@@ -3,6 +3,7 @@ package databasOu2.controller;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,9 +16,11 @@ import databasOu2.model.Database;
 import databasOu2.model.Program;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class Controller {
+public class Controller implements Initializable{
     private Database database;
     private boolean wasInit;
 
@@ -43,6 +46,31 @@ public class Controller {
         database.createTriggerFunction();
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ArrayList<String> channelNames = database.getChannelNames();
+
+        for (String s : channelNames) {
+            MenuItem item = new MenuItem();
+            item.setText(s);
+            item.setOnAction(event -> { //Här är lamnda igen :)
+                ObservableList<Program> programs = database
+                        .getProgramsFromChannel(item.getText());
+
+                programColumn.setCellValueFactory(new
+                        PropertyValueFactory<>("name"));
+                categoryColumn.setCellValueFactory(new
+                        PropertyValueFactory<>("category"));
+                editorColumn.setCellValueFactory(new
+                        PropertyValueFactory<>("editor"));
+
+                tableView.getItems().setAll(programs);
+                channelTextField.setText(item.getText());
+
+            });
+            channels.getItems().add(item);
+        }
+    }
 
     @FXML
     private void getDoubleClickedProgram() {
@@ -54,37 +82,6 @@ public class Controller {
                         p.getName()), p);
             }
         });
-    }
-
-
-    @FXML
-    public void initMenu() {
-
-        if (!wasInit) {
-            ArrayList<String> channelNames = database.getChannelNames();
-
-            for (String s : channelNames) {
-                MenuItem item = new MenuItem();
-                item.setText(s);
-                item.setOnAction(event -> { //Här är lamnda igen :)
-                    ObservableList<Program> programs = database
-                            .getProgramsFromChannel(item.getText());
-
-                    programColumn.setCellValueFactory(new
-                            PropertyValueFactory<>("name"));
-                    categoryColumn.setCellValueFactory(new
-                            PropertyValueFactory<>("category"));
-                    editorColumn.setCellValueFactory(new
-                            PropertyValueFactory<>("editor"));
-
-                    tableView.getItems().setAll(programs);
-                    channelTextField.setText(item.getText());
-
-                });
-                channels.getItems().add(item);
-            }
-            wasInit = true;
-        }
     }
 
     public void openAddProgramPopup() {
@@ -145,4 +142,6 @@ public class Controller {
         }
 
     }
+
+
 }
