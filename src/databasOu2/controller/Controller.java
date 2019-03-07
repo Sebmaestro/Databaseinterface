@@ -117,6 +117,7 @@ public class Controller implements Initializable{
             alert.showAndWait();
         } else {
             database.deleteProgramAndBroadcasts(p.getId());
+            tableView.getItems().remove(p);
         }
     }
 

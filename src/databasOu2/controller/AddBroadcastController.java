@@ -5,12 +5,15 @@ import databasOu2.model.Database;
 import databasOu2.model.Program;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ResourceBundle;
 
 public class AddBroadcastController implements Initializable{
@@ -56,11 +59,25 @@ public class AddBroadcastController implements Initializable{
     }
 
     public void addBroadcast() {
-        Broadcast b = database.addBroadcast(program, null, starttimeTextField
-                .getText(), durationTextField.getText(), null);
+        Broadcast b = null;
+        try {
+            b = database.addBroadcast(program, null, starttimeTextField
+                    .getText(), durationTextField.getText(), null);
+        } catch (SQLException e) {
+            showPopupMessage("There is already a broadcast at the " +
+                    "specified time for this channel");
+        } catch (ParseException | IllegalArgumentException e){
+            showPopupMessage("Wrong formatted input");
+        }
         Stage stage = (Stage) addButton.getScene().getWindow();
         stage.close();
 
         broadcastTableView.getItems().add(b);
+    }
+
+    private void showPopupMessage(String str) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(str);
+        alert.showAndWait();
     }
 }

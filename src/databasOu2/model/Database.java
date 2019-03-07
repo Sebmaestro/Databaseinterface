@@ -259,19 +259,37 @@ public class Database {
 
     public void deleteProgramAndBroadcasts(int programID) {
         try {
+
             statement = connection.createStatement();
 
-            String alterQuery =
-                    "ALTER TABLE program DROP CONSTRAINT IF EXISTS delete_all" +
-                    "ADD CONSTRAINT delete_all" +
-                    "FOREIGN KEY (program) REFERENCES program(program_id)"+
-                    "ON DELETE CASCADE";
+            /*String checkQuery =
+                    "ALTER TABLE broadcast DROP CONSTRAINT IF EXISTS " +
+                            "broadcast_program_fkey";*/
+            String dropIfExistQuery =
+                    "ALTER TABLE broadcast DROP CONSTRAINT IF EXISTS " +
+                            "delete_all";
 
-            statement.executeUpdate(alterQuery);
+            statement.executeUpdate(dropIfExistQuery);
+//-------------------------------------------------------------------------------
 
+            statement = connection.createStatement();
+            String constraintQuery =
+                    /*
+                    "ALTER TABLE broadcast ADD CONSTRAINT delete_all" +
+                            " FOREIGN KEY (program)" +
+                            " ON DELETE CASCADE";*/
+
+
+                    "ALTER TABLE broadcast ADD CONSTRAINT delete_all " +
+                            "FOREIGN KEY (program) REFERENCES " +
+                            "program(program_id) "+
+                            "ON DELETE CASCADE";
+            statement.executeUpdate(constraintQuery);
+//-----------------------------------------------------------------------------------
+            statement = connection.createStatement();
             String deleteQuery =
                     "DELETE FROM program" +
-                            "WHERE program_id = "+programID;
+                            " WHERE program_id = "+programID;
 
             statement.executeUpdate(deleteQuery);
 
@@ -290,11 +308,11 @@ public class Database {
 
 
     public Broadcast addBroadcast(Program program, String tagline, String
-            starttime,
-                             String durationString, String image_url) {
+            starttime, String durationString, String image_url) throws
+            SQLException, ParseException, IllegalArgumentException {
         Broadcast b = null;
         int primaryKey = 0;
-        try {
+
 
             statement = connection.createStatement();
 
@@ -329,11 +347,7 @@ public class Database {
             connection.commit();
             b = new Broadcast(program.getName(), tagline, starttime, durationString,
                     image_url, primaryKey+1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
 
         return b;
     }

@@ -11,7 +11,7 @@
    <children>
       <TableView fx:id="tableViewPopup" layoutX="103.0" layoutY="52.0" prefHeight="300.0" prefWidth="672.0" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
         <columns>
-          <TableColumn fx:id="dateColumn" prefWidth="250.0" text="Date" />
+          <TableColumn fx:id="dateColumn" prefWidth="250.0" text="Starttime" />
           <TableColumn fx:id="durationColumn" minWidth="0.0" prefWidth="250.0" text="Duration" />
         </columns>
       </TableView>
