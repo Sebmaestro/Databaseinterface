@@ -435,6 +435,36 @@ public class Database {
         }
     }
 
+    public void editBroadcast(Broadcast broadcast, String starttime, String durationString){
+        try {
+            Timestamp broadcast_date = Timestamp.valueOf(starttime);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+            formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+            Date durationDate = formatter.parse(durationString);
+            int duration = (int) durationDate.getTime() / 1000;
+
+            statement = connection.createStatement();
+            String query = "UPDATE broadcast " +
+                    "SET broadcast_date = ?, duration = ? " +
+                    "WHERE broadcast_id = "+broadcast.getId();
+
+            connection.setAutoCommit(false);
+            PreparedStatement p = connection.prepareStatement(query);
+            p.setTimestamp(1, broadcast_date);
+            p.setInt(2, duration);
+            p.executeUpdate();
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch(IllegalArgumentException e){
+            e.printStackTrace();
+        }
+    }
+
     public void dropTrigger(){
         try {
             statement = connection.createStatement();
