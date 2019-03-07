@@ -31,4 +31,12 @@ public class Broadcast {
     public String getDuration() {
         return duration;
     }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
 }

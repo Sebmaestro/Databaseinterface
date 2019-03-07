@@ -314,39 +314,39 @@ public class Database {
         int primaryKey = 0;
 
 
-            statement = connection.createStatement();
+        statement = connection.createStatement();
 
-            String selectQuery = "SELECT MAX(b.broadcast_id)" +
-                    "FROM broadcast b";
+        String selectQuery = "SELECT MAX(b.broadcast_id)" +
+                "FROM broadcast b";
 
-            ResultSet resultSet = statement.executeQuery(selectQuery);
+        ResultSet resultSet = statement.executeQuery(selectQuery);
 
-            while (resultSet.next()) {
-                primaryKey = resultSet.getInt(1);
-            }
-            Timestamp broadcast_date = Timestamp.valueOf(starttime);
+        while (resultSet.next()) {
+            primaryKey = resultSet.getInt(1);
+        }
+        Timestamp broadcast_date = Timestamp.valueOf(starttime);
 
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-            formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
-            Date durationDate = formatter.parse(durationString);
-            int duration = (int) durationDate.getTime() / 1000;
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+        Date durationDate = formatter.parse(durationString);
+        int duration = (int) durationDate.getTime() / 1000;
 
-            String insertQuery = "INSERT INTO broadcast(broadcast_id, program, " +
-                    "tagline, broadcast_date, duration, image_url)" +
-                    " VALUES(?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO broadcast(broadcast_id, program, " +
+                "tagline, broadcast_date, duration, image_url)" +
+                " VALUES(?,?,?,?,?,?)";
 
-            connection.setAutoCommit(false);
-            PreparedStatement p = connection.prepareStatement(insertQuery);
-            p.setInt(1, primaryKey + 1);
-            p.setInt(2, program.getId());
-            p.setString(3, tagline);
-            p.setTimestamp(4, broadcast_date);
-            p.setInt(5, duration);
-            p.setString(6, image_url);
-            p.executeUpdate();
-            connection.commit();
-            b = new Broadcast(program.getName(), tagline, starttime, durationString,
-                    image_url, primaryKey+1);
+        connection.setAutoCommit(false);
+        PreparedStatement p = connection.prepareStatement(insertQuery);
+        p.setInt(1, primaryKey + 1);
+        p.setInt(2, program.getId());
+        p.setString(3, tagline);
+        p.setTimestamp(4, broadcast_date);
+        p.setInt(5, duration);
+        p.setString(6, image_url);
+        p.executeUpdate();
+        connection.commit();
+        b = new Broadcast(program.getName(), tagline, starttime, durationString,
+                image_url, primaryKey+1);
 
 
         return b;
@@ -364,7 +364,7 @@ public class Database {
             statement = connection.createStatement();
             query = "CREATE OR REPLACE FUNCTION broadcast_trigger_func() " +
                     "RETURNS trigger AS " +
-                    "$func$" +
+                    "$trigger_func$" +
                     "BEGIN " +
                     "IF ((SELECT COUNT(broadcast_id) " +
                     "FROM program JOIN broadcast ON program.program_id = broadcast.program " +
@@ -388,14 +388,14 @@ public class Database {
                     "END IF;" +
                     "RETURN NEW;" +
                     "END " +
-                    "$func$ LANGUAGE plpgsql";
+                    "$trigger_func$ LANGUAGE plpgsql";
             statement.executeUpdate(query);
 
             System.out.println("xd");
 
             statement= connection.createStatement();
             query = "CREATE TRIGGER broadcast_trigger " +
-                    "BEFORE INSERT ON broadcast " +
+                    "BEFORE INSERT OR UPDATE ON broadcast " +
                     "FOR EACH ROW EXECUTE PROCEDURE broadcast_trigger_func()";
             statement.executeUpdate(query);
         } catch (SQLException e) {
