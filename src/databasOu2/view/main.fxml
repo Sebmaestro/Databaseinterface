@@ -10,7 +10,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane pickOnBounds="false" prefHeight="731.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane pickOnBounds="false" prefHeight="731.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databasOu2.controller.Controller">
    <children>
       <TableView fx:id="tableView" layoutY="50.0" onMouseClicked="#getDoubleClickedProgram" prefHeight="619.0" prefWidth="756.0" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
          <columns>

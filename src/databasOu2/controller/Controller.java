@@ -1,4 +1,4 @@
-package sample;
+package databasOu2.controller;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,9 +10,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import sample.model.Broadcast;
-import sample.model.Database;
-import sample.model.Program;
+import databasOu2.model.Broadcast;
+import databasOu2.model.Database;
+import databasOu2.model.Program;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -89,7 +89,8 @@ public class Controller {
 
     public void openAddProgramPopup() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource
-                ("addProgram.fxml"));
+                ("/databasOu2/view/addProgram.fxml"));
+
 
         try {
             Parent root = loader.load();
@@ -121,8 +122,10 @@ public class Controller {
         }
     }
 
+
     public void openBroadcastPopup(ObservableList<Broadcast> broadcasts, Program p){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("broadcast.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource
+                ("/databasOu2/view/broadcast.fxml"));
 
         try {
             Parent root = loader.load();

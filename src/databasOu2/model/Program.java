@@ -1,4 +1,4 @@
-package sample.model;
+package databasOu2.model;
 
 public class Program {
 

@@ -1,4 +1,4 @@
-package sample;
+package databasOu2.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -7,7 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import sample.model.Database;
+import databasOu2.model.Database;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -45,14 +45,6 @@ public class AddProgramController implements Initializable{
         System.out.println("Biggam");
 
 
-
-        /*
-        for (String s:channelMap) {
-            channelCombo.getItems().add(s);
-        }
-        */
-
-        //categoryCombo.getItems().addAll(categoryMap.)
     }
 
     @Override
@@ -63,12 +55,6 @@ public class AddProgramController implements Initializable{
 
         programObservable.addAll(channelList);
         categoryObservable.addAll(categoryList);
-
-        /*
-        for (int i: categoryMap.keySet()) {
-            categoryObservable.add(categoryMap.get(i));
-        }
-        */
 
         channelCombo.setItems(programObservable);
         categoryCombo.setItems(categoryObservable);

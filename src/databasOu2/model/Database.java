@@ -1,4 +1,4 @@
-package sample.model;
+package databasOu2.model;
 
 
 import javafx.collections.FXCollections;
@@ -289,11 +289,13 @@ public class Database {
     }
 
 
-    public void addBroadcast(int programID, String tagline, String starttime,
+    public Broadcast addBroadcast(Program program, String tagline, String
+            starttime,
                              String durationString, String image_url) {
 
+        int primaryKey = 0;
         try {
-            int primaryKey = 0;
+
             statement = connection.createStatement();
 
             String selectQuery = "SELECT MAX(b.broadcast_id)" +
@@ -318,7 +320,7 @@ public class Database {
             connection.setAutoCommit(false);
             PreparedStatement p = connection.prepareStatement(insertQuery);
             p.setInt(1, primaryKey + 1);
-            p.setInt(2, programID);
+            p.setInt(2, program.getId());
             p.setString(3, tagline);
             p.setTimestamp(4, broadcast_date);
             p.setInt(5, duration);
@@ -330,6 +332,9 @@ public class Database {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        return new Broadcast(program.getName(), tagline, starttime, durationString,
+         image_url, primaryKey+1);
     }
 
 
