@@ -40,6 +40,7 @@ public class Controller {
         database.setChannelNames();
         database.setCategoryPairs();
         wasInit = false;
+        database.createTriggerFunction();
     }
 
 
@@ -50,7 +51,7 @@ public class Controller {
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
                 Program p = tableView.getSelectionModel().getSelectedItem();
                 openBroadcastPopup(database.getBroadcastFromProgram(p.getId(),
-                        p.getName()));
+                        p.getName()), p);
             }
         });
     }
@@ -118,15 +119,16 @@ public class Controller {
         }
     }
 
-    public void openBroadcastPopup(ObservableList<Broadcast> broadcasts){
+    public void openBroadcastPopup(ObservableList<Broadcast> broadcasts, Program p){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("broadcast.fxml"));
 
         try {
             Parent root = loader.load();
 
-            BroadcastController pop = loader.getController();
-            pop.setBroadcasts(broadcasts);
-            pop.setTableValues();
+            BroadcastController broadCtrl = loader.getController();
+            broadCtrl.setProgram(p);
+            broadCtrl.setBroadcasts(broadcasts);
+            broadCtrl.setTableValues();
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root, 520,900));

@@ -6,6 +6,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.model.Broadcast;
+import sample.model.Program;
 
 import java.util.Date;
 
@@ -18,9 +19,15 @@ public class BroadcastController {
     private TableColumn<Broadcast, String> durationColumn;
     private ObservableList<Broadcast> broadcasts;
 
+    private Program program;
+
     public BroadcastController(){
         System.out.println("started");
 
+    }
+
+    public void setProgram(Program program){
+        this.program = program;
     }
 
     public void setTableValues(){
@@ -35,9 +42,6 @@ public class BroadcastController {
 
     public void setBroadcasts(ObservableList<Broadcast> broadcasts) {
         this.broadcasts = broadcasts;
-        for (Broadcast b: this.broadcasts) {
-            System.out.println(b);
-        }
     }
 
 }

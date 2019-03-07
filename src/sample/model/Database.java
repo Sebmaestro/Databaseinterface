@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
@@ -256,6 +257,51 @@ public class Database {
         }
     }
 
+    public void addBroadcast(int programID, String tagline, String starttime,
+                             String durationString, String image_url){
+
+        try {
+            int primaryKey = 0;
+            statement = connection.createStatement();
+
+            String selectQuery = "SELECT MAX(b.broadcast_id)" +
+                    "FROM broadcast b";
+
+            ResultSet resultSet = statement.executeQuery(selectQuery);
+
+            while(resultSet.next()) {
+                primaryKey = resultSet.getInt(1);
+            }
+            Timestamp broadcast_date = Timestamp.valueOf(starttime);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+            formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+            Date durationDate = formatter.parse(durationString);
+            int duration = (int)durationDate.getTime()/1000;
+
+            String insertQuery = "INSERT INTO broadcast(broadcast_id, program, " +
+                    "tagline, broadcast_date, duration, image_url)" +
+                    " VALUES(?,?,?,?,?,?)";
+
+            connection.setAutoCommit(false);
+            PreparedStatement p = connection.prepareStatement(insertQuery);
+            p.setInt(1, primaryKey+1);
+            p.setInt(2, programID);
+            p.setString(3, tagline);
+            p.setTimestamp(4, broadcast_date);
+            p.setInt(5, duration);
+            p.setString(6, image_url);
+            p.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     public void deleteProgramAndBroadcasts() {
 
     }
@@ -305,14 +351,6 @@ public class Database {
             query = "CREATE TRIGGER broadcast_trigger " +
                     "BEFORE INSERT ON broadcast " +
                     "FOR EACH ROW EXECUTE PROCEDURE broadcast_trigger_func()";
-            statement.executeUpdate(query);
-
-            System.out.println("xd2");
-
-
-            //TODO REMOVE THIS TEST
-            statement = connection.createStatement();
-            query = "INSERT INTO broadcast VALUES(674401,99,'HAHAHAHHAHA 20181207 06:30','2019-09-03T04:02:00Z',1800,'https://static-cdn.sr.se/sida/images/99/2580947_512_512.jpg?preset=api-default-square')";
             statement.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
