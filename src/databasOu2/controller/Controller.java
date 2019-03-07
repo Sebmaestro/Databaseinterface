@@ -98,6 +98,7 @@ public class Controller {
 
             AddProgramController big = loader.getController();
             big.init();
+            big.setTableView(tableView);
 
 
             Stage stage = new Stage();

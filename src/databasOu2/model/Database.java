@@ -197,12 +197,9 @@ public class Database {
             while(resultSet.next()){
                 String tagline = resultSet.getString(1);
 
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
-                Timestamp timestamp = resultSet.getTimestamp(2, calendar);
+                Timestamp timestamp = resultSet.getTimestamp(2);
                 SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
                 String dateString = formatter.format(timestamp);
-
 
                 long durationTime = resultSet.getInt(3) * 1000;
                 formatter = new SimpleDateFormat("HH:mm:ss");
@@ -222,9 +219,9 @@ public class Database {
         return broadcasts;
     }
 
-    public void addProgram(int channelxd, int categoryxd, String editorxd,
+    public Program addProgram(int channelxd, int categoryxd, String editorxd,
                            String namexd, String channel){
-
+        Program program = null;
         try {
             int primaryKey = 0;
             statement = connection.createStatement();
@@ -251,10 +248,13 @@ public class Database {
             p.setInt(5, categoryxd);
             p.executeUpdate();
             connection.commit();
-
+            program = new Program(namexd, categoryIdNames.get(categoryxd),
+                    editorxd, null, null, null, primaryKey+1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return program;
     }
 
     public void deleteProgramAndBroadcasts(int programID) {
@@ -292,7 +292,7 @@ public class Database {
     public Broadcast addBroadcast(Program program, String tagline, String
             starttime,
                              String durationString, String image_url) {
-
+        Broadcast b = null;
         int primaryKey = 0;
         try {
 
@@ -327,14 +327,15 @@ public class Database {
             p.setString(6, image_url);
             p.executeUpdate();
             connection.commit();
+            b = new Broadcast(program.getName(), tagline, starttime, durationString,
+                    image_url, primaryKey+1);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        return new Broadcast(program.getName(), tagline, starttime, durationString,
-         image_url, primaryKey+1);
+        return b;
     }
 
 

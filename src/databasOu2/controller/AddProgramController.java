@@ -1,13 +1,16 @@
 package databasOu2.controller;
 
+import databasOu2.model.Program;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import databasOu2.model.Database;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,6 +30,8 @@ public class AddProgramController implements Initializable{
     private TextField insertEditorTextField;
     @FXML
     private Button addProgramButton;
+
+    private TableView<Program> tableView;
 
     private HashMap<String, Integer> channelMap;
     private HashMap<String, Integer> categoryMap;
@@ -60,6 +65,10 @@ public class AddProgramController implements Initializable{
         categoryCombo.setItems(categoryObservable);
     }
 
+    public void setTableView(TableView<Program> tableView){
+        this.tableView = tableView;
+    }
+
     public void setAddProgramButton() {
         String channel = channelCombo.getValue();
         String category = categoryCombo.getValue();
@@ -70,8 +79,12 @@ public class AddProgramController implements Initializable{
 
         System.out.println("Tjena pontus");
 
-        database.addProgram(channelID, categoryID, insertEditorTextField
-                .getText(), insertProgramTextField.getText(), channel);
+        Program p = database.addProgram(channelID, categoryID,
+                insertEditorTextField.getText(),
+                insertProgramTextField.getText(), channel);
+        tableView.getItems().add(p);
+        Stage stage = (Stage) addProgramButton.getScene().getWindow();
+        stage.close();
     }
 
     public void init() {
