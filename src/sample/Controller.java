@@ -116,6 +116,8 @@ public class Controller {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Please choose a program before deletion");
             alert.showAndWait();
+        } else {
+            database.deleteProgramAndBroadcasts(p.getId());
         }
     }
 

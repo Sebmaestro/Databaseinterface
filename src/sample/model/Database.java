@@ -257,8 +257,40 @@ public class Database {
         }
     }
 
+    public void deleteProgramAndBroadcasts(int programID) {
+        try {
+            statement = connection.createStatement();
+
+            String alterQuery =
+                    "ALTER TABLE program DROP CONSTRAINT IF EXISTS delete_all" +
+                    "ADD CONSTRAINT delete_all" +
+                    "FOREIGN KEY (program) REFERENCES program(program_id)"+
+                    "ON DELETE CASCADE";
+
+            statement.executeUpdate(alterQuery);
+
+            String deleteQuery =
+                    "DELETE FROM program" +
+                            "WHERE program_id = "+programID;
+
+            statement.executeUpdate(deleteQuery);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void deleteOnlyBroadcast() {
+
+
+
+    }
+
+
     public void addBroadcast(int programID, String tagline, String starttime,
-                             String durationString, String image_url){
+                             String durationString, String image_url) {
 
         try {
             int primaryKey = 0;
@@ -269,7 +301,7 @@ public class Database {
 
             ResultSet resultSet = statement.executeQuery(selectQuery);
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 primaryKey = resultSet.getInt(1);
             }
             Timestamp broadcast_date = Timestamp.valueOf(starttime);
@@ -277,7 +309,7 @@ public class Database {
             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
             formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
             Date durationDate = formatter.parse(durationString);
-            int duration = (int)durationDate.getTime()/1000;
+            int duration = (int) durationDate.getTime() / 1000;
 
             String insertQuery = "INSERT INTO broadcast(broadcast_id, program, " +
                     "tagline, broadcast_date, duration, image_url)" +
@@ -285,7 +317,7 @@ public class Database {
 
             connection.setAutoCommit(false);
             PreparedStatement p = connection.prepareStatement(insertQuery);
-            p.setInt(1, primaryKey+1);
+            p.setInt(1, primaryKey + 1);
             p.setInt(2, programID);
             p.setString(3, tagline);
             p.setTimestamp(4, broadcast_date);
@@ -298,12 +330,6 @@ public class Database {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
-    }
-
-    public void deleteProgramAndBroadcasts() {
-
     }
 
 
