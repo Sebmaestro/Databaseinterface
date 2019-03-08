@@ -13,6 +13,7 @@ import databasOu2.model.Broadcast;
 import databasOu2.model.Program;
 
 import java.io.IOException;
+import java.net.ContentHandler;
 
 public class BroadcastController {
     @FXML
@@ -89,15 +90,38 @@ public class BroadcastController {
         broadcast = tableViewPopup.getSelectionModel().getSelectedItem();
         System.out.println(tableViewPopup.getSelectionModel().getSelectedItem());
         if (broadcast == null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Please choose a broadcast before deletion");
-            alert.showAndWait();
+            Controller.showPopupMessage("Please choose a program before deletion");
         } else {
             database.deleteOnlyBroadcast(broadcast.getId());
             tableViewPopup.getItems().remove(broadcast);
         }
     }
 
+    public void openEditBroadcast(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource
+                ("/databasOu2/view/editBroadcast.fxml"));
 
+        try {
+            broadcast = tableViewPopup.getSelectionModel().getSelectedItem();
+            System.out.println(tableViewPopup.getSelectionModel().getSelectedItem());
+            if (broadcast == null) {
+                Controller.showPopupMessage("Please choose a program before editing");
+            } else {
+                Parent root = loader.load();
+
+                EditBroadcastController edit = loader.getController();
+                edit.setTable(tableViewPopup);
+                edit.setBroadcast(broadcast);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

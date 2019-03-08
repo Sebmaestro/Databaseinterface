@@ -175,7 +175,7 @@ public class Controller implements Initializable{
         }
     }
 
-    private void showPopupMessage(String str) {
+    public static void showPopupMessage(String str) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(str);
         alert.showAndWait();
