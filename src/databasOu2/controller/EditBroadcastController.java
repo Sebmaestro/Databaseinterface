@@ -23,9 +23,6 @@ public class EditBroadcastController {
     private Button editButton;
 
     @FXML
-    private TextField currentProgramTextField;
-
-    @FXML
     private TextField starttimeTextField;
 
     public EditBroadcastController() {

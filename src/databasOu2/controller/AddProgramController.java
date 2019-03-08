@@ -76,12 +76,9 @@ public class AddProgramController implements Initializable{
         int channelID = channelMap.get(channel);
         int categoryID = categoryMap.get(category);
 
-
-        System.out.println("Tjena pontus");
-
         Program p = database.addProgram(channelID, categoryID,
                 insertEditorTextField.getText(),
-                insertProgramTextField.getText(), channel);
+                insertProgramTextField.getText());
         tableView.getItems().add(p);
         Stage stage = (Stage) addProgramButton.getScene().getWindow();
         stage.close();

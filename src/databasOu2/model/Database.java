@@ -21,6 +21,12 @@ import java.util.Date;
 
     psql -U c5dv202_vt19_c17sal -h postgres c5dv202_vt19_c17sal
  */
+
+/**
+ * This class represents a postgres-database from which the user
+ * can use queries and different operation to retrieve information
+ * from the database.
+ */
 public class Database {
 
     private Connection connection;
@@ -76,10 +82,20 @@ public class Database {
         }
     }
 
+    /**
+     * A getter for all channelnames.
+     *
+     * @return list of all channelnames
+     */
     public ArrayList<String> getChannelNames() {
         return channelNames;
     }
 
+    /**
+     * A getter for all categorynames.
+     *
+     * @return list of all categorynames
+     */
     public ArrayList<String> getCategoryNames() {
         return categoryNames;
     }
@@ -88,6 +104,11 @@ public class Database {
         return sebbesHashMap;
     }
 
+    /**
+     * A getter for the Channelname/ID hashmap.
+     *
+     * @return hashmap of channelnames/ids
+     */
     public HashMap<String, Integer> getChannelNamesId() {
         return channelNamesId;
     }
@@ -142,9 +163,10 @@ public class Database {
     }
 
     /**
+     * Returns a list of all programs from a channel.
      *
-     * @param channelName
-     * @return
+     * @param channelName - name of the channel
+     * @return observable list of programs
      */
     public ObservableList<Program> getProgramsFromChannel(String channelName) {
         int channelId = channelNamesId.get(channelName);
@@ -181,10 +203,11 @@ public class Database {
     }
 
     /**
+     * Returns a list of all broadcasts from a program.
      *
-     * @param programId
-     * @param programName
-     * @return
+     * @param programId - id of the program
+     * @param programName - name of the program
+     * @return - Observable list of broadcasts
      */
     public ObservableList<Broadcast> getBroadcastFromProgram(int programId, String programName){
         ObservableList<Broadcast> broadcasts = FXCollections.observableArrayList();
@@ -199,7 +222,10 @@ public class Database {
 
                 Timestamp timestamp = resultSet.getTimestamp(2);
                 SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-                String dateString = formatter.format(timestamp);
+                String dateString = timestamp.toString();
+                dateString = dateString.replace(".0", "");
+                System.out.println(timestamp);
+                System.out.println(dateString);
 
                 long durationTime = resultSet.getInt(3) * 1000;
                 formatter = new SimpleDateFormat("HH:mm:ss");
@@ -219,8 +245,17 @@ public class Database {
         return broadcasts;
     }
 
-    public Program addProgram(int channelxd, int categoryxd, String editorxd,
-                           String namexd, String channel){
+    /**
+     * Adds a new program to the database.
+     *
+     * @param channelId - ID of the channel of the program
+     * @param categoryId - ID of the cateogory of the program.
+     * @param editorName - Editor of the program.
+     * @param programName - Name of the program.
+     * @return the new program.
+     */
+    public Program addProgram(int channelId, int categoryId, String editorName,
+                           String programName){
         Program program = null;
         try {
             int primaryKey = 0;
@@ -242,14 +277,14 @@ public class Database {
             connection.setAutoCommit(false);
             PreparedStatement p = connection.prepareStatement(insertQuery);
             p.setInt(1, primaryKey+1);
-            p.setString(2, namexd);
-            p.setString(3, editorxd);
-            p.setInt(4, channelxd);
-            p.setInt(5, categoryxd);
+            p.setString(2, programName);
+            p.setString(3, editorName);
+            p.setInt(4, channelId);
+            p.setInt(5, categoryId);
             p.executeUpdate();
             connection.commit();
-            program = new Program(namexd, categoryIdNames.get(categoryxd),
-                    editorxd, null, null, null, primaryKey+1);
+            program = new Program(programName, categoryIdNames.get(categoryId),
+                    editorName, null, null, null, primaryKey+1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -257,14 +292,17 @@ public class Database {
         return program;
     }
 
+    /**
+     * Deletes a program with the given id from the database and all
+     * corresponding broadcasts to that program id. Uses cascade-contraint.
+     *
+     * @param programID - id of a program.
+     */
     public void deleteProgramAndBroadcasts(int programID) {
         try {
 
             statement = connection.createStatement();
 
-            /*String checkQuery =
-                    "ALTER TABLE broadcast DROP CONSTRAINT IF EXISTS " +
-                            "broadcast_program_fkey";*/
             String dropIfExistQuery =
                     "ALTER TABLE broadcast DROP CONSTRAINT IF EXISTS " +
                             "delete_all";
@@ -274,12 +312,6 @@ public class Database {
 
             statement = connection.createStatement();
             String constraintQuery =
-                    /*
-                    "ALTER TABLE broadcast ADD CONSTRAINT delete_all" +
-                            " FOREIGN KEY (program)" +
-                            " ON DELETE CASCADE";*/
-
-
                     "ALTER TABLE broadcast ADD CONSTRAINT delete_all " +
                             "FOREIGN KEY (program) REFERENCES " +
                             "program(program_id) "+
@@ -297,9 +329,13 @@ public class Database {
             e.printStackTrace();
         }
 
-
     }
 
+    /**
+     * Deletes a broadcast with the given id from the database.
+     *
+     * @param broadcastID - if of a broadcast
+     */
     public void deleteOnlyBroadcast(int broadcastID) {
         try {
             statement = connection.createStatement();
@@ -318,6 +354,21 @@ public class Database {
     }
 
 
+    /**
+     * Adds a new broadcast to the current program.
+     *
+     * @param program - program used in the broadcast.
+     * @param tagline - tagline of the broadcast.
+     * @param starttime - start time of the broadcast.
+     * @param durationString - length of the broadcast
+     * @param image_url - picture of the broadcast.
+     * @return the created broadcast
+     * @throws SQLException - if the user entered an invalid date
+     * @throws ParseException - if the user entered a date with invalid
+     *                          characters
+     * @throws IllegalArgumentException - if the user entered a duration
+     *                                    with invalid characters
+     */
     public Broadcast addBroadcast(Program program, String tagline, String
             starttime, String durationString, String image_url) throws
             SQLException, ParseException, IllegalArgumentException {
@@ -346,7 +397,7 @@ public class Database {
                 "tagline, broadcast_date, duration, image_url)" +
                 " VALUES(?,?,?,?,?,?)";
 
-        connection.setAutoCommit(false);
+        //connection.setAutoCommit(false);
         PreparedStatement p = connection.prepareStatement(insertQuery);
         p.setInt(1, primaryKey + 1);
         p.setInt(2, program.getId());
@@ -355,7 +406,7 @@ public class Database {
         p.setInt(5, duration);
         p.setString(6, image_url);
         p.executeUpdate();
-        connection.commit();
+        //connection.commit();
         b = new Broadcast(program.getName(), tagline, starttime, durationString,
                 image_url, primaryKey+1);
 
@@ -364,13 +415,16 @@ public class Database {
     }
 
 
+    /**
+     * Creates a trigger-function and adds a trigger to the database which
+     * restricts the user from adding/updating broadcasts with invalid
+     * dates.
+     */
     public void createTriggerFunction(){
         try {
             statement = connection.createStatement();
             String query = "DROP TRIGGER IF EXISTS broadcast_trigger ON broadcast";
             statement.executeUpdate(query);
-
-
 
             statement = connection.createStatement();
             query = "CREATE OR REPLACE FUNCTION broadcast_trigger_func() " +
@@ -402,8 +456,6 @@ public class Database {
                     "$trigger_func$ LANGUAGE plpgsql";
             statement.executeUpdate(query);
 
-            System.out.println("xd");
-
             statement= connection.createStatement();
             query = "CREATE TRIGGER broadcast_trigger " +
                     "BEFORE INSERT OR UPDATE ON broadcast " +
@@ -414,6 +466,15 @@ public class Database {
         }
     }
 
+    /**
+     * Edits the name, category and editor of an existing program in the
+     * database.
+     *
+     * @param program - program to update
+     * @param name - new name
+     * @param category - new category
+     * @param editor - new editor
+     */
     public void editProgram(Program program, String name, String category,
                             String editor) {
         try {
@@ -441,10 +502,19 @@ public class Database {
         }
     }
 
+    /**
+     * Edits the startttime and duration of an existing broadcast.
+     *
+     * @param broadcast - broadcast to update
+     * @param starttime - new starttime
+     * @param durationString - new duration
+     * @throws SQLException - if the user entered an invalid date
+     * @throws ParseException - if the user entered a date with invalid
+     *                          characters
+     * @throws IllegalArgumentException - if the user entered a duration
+     *                                    with invalid characters
+     */
     public void editBroadcast(Broadcast broadcast, String starttime, String durationString) throws SQLException, ParseException, IllegalArgumentException{
-
-        System.out.println(starttime+" "+durationString);
-
         Timestamp broadcast_date = Timestamp.valueOf(starttime);
 
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
@@ -457,18 +527,22 @@ public class Database {
                 "SET broadcast_date = ?, duration = ? " +
                 "WHERE broadcast_id = ?";
 
-        connection.setAutoCommit(false);
+        //connection.setAutoCommit(false);
         PreparedStatement p = connection.prepareStatement(query);
         p.setTimestamp(1, broadcast_date);
         p.setInt(2, duration);
         p.setInt(3, broadcast.getId());
         p.executeUpdate();
-        connection.commit();
+        //connection.commit();
 
         broadcast.setDate(starttime);
         broadcast.setDuration(durationString);
     }
 
+    /**
+     * Removes the trigger and corresponding trigger-function from the
+     * database.
+     */
     public void dropTrigger(){
         try {
             statement = connection.createStatement();

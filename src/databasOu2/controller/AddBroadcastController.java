@@ -63,16 +63,19 @@ public class AddBroadcastController implements Initializable{
         try {
             b = database.addBroadcast(program, null, starttimeTextField
                     .getText(), durationTextField.getText(), null);
+            Stage stage = (Stage) addButton.getScene().getWindow();
+            stage.close();
         } catch (SQLException e) {
             Controller.showPopupMessage("There is already a broadcast at the " +
                     "specified time for this channel");
         } catch (ParseException | IllegalArgumentException e){
             Controller.showPopupMessage("Wrong formatted input");
         }
-        Stage stage = (Stage) addButton.getScene().getWindow();
-        stage.close();
 
-        broadcastTableView.getItems().add(b);
+        if(b != null){
+            broadcastTableView.getItems().add(b);
+        }
+
     }
 
 }
