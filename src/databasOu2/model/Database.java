@@ -38,48 +38,37 @@ public class Database {
     private HashMap<Integer, String> categoryIdNames;
     private HashMap<String, Integer> channelNamesId;
 
-    private HashMap<String, Integer> sebbesHashMap;
+    private HashMap<String, Integer> categoryNamesId;
 
     /**
      * Constructor: Will initialize the database
      */
-    public Database() {
+    public Database() throws ClassNotFoundException, SQLException {
         getDriver();
         connectToDatabase();
         channelNames = new ArrayList<>();
         categoryNames = new ArrayList<>();
         channelNamesId = new HashMap<>();
         categoryIdNames = new HashMap<>();
-        sebbesHashMap = new HashMap<>();
+        categoryNamesId = new HashMap<>();
     }
 
     /**
      * Connects to the database
      */
-    private void connectToDatabase() {
-        try {
+    private void connectToDatabase() throws SQLException {
             String username = "c5dv202_vt19_c17sal";
             String password = "tRFonnU73mdF";
             String database = "jdbc:postgresql://postgres.cs.umu.se/";
             this.connection = DriverManager.getConnection(database, username, password);
             statement = connection.createStatement();
-            //statement.executeUpdate("USE c5dv202_vt19_c17sal");
-        } catch (SQLException e) {
-            System.out.println("At connection "+e.getMessage());
-        }
-        System.out.println("Connected to database");
     }
 
     /**
      * Gets the driver
      */
-    private void getDriver() {
-        try {
+    private void getDriver() throws ClassNotFoundException {
             Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            //System.out.println(e.getMessage());
-        }
     }
 
     /**
@@ -100,8 +89,12 @@ public class Database {
         return categoryNames;
     }
 
+    /**
+     * A getter for the category name/ID hashmap
+     * @return the hashmap
+     */
     public HashMap<String, Integer> getCategoryIdNames() {
-        return sebbesHashMap;
+        return categoryNamesId;
     }
 
     /**
@@ -152,7 +145,7 @@ public class Database {
                 int resInt = resultSet.getInt(2);
                 categoryNames.add(resString);
                 categoryIdNames.put(resInt, resString);
-                sebbesHashMap.put(resString, resInt);
+                categoryNamesId.put(resString, resInt);
                 int i = 5;
             }
 
@@ -487,7 +480,7 @@ public class Database {
             connection.setAutoCommit(false);
             PreparedStatement p = connection.prepareStatement(query);
             p.setString(1, name);
-            p.setInt(2, sebbesHashMap.get(category));
+            p.setInt(2, categoryNamesId.get(category));
             p.setString(3, editor);
             p.setInt(4, program.getId());
             p.executeUpdate();

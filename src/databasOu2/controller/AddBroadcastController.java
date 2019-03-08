@@ -4,19 +4,18 @@ import databasOu2.model.Broadcast;
 import databasOu2.model.Database;
 import databasOu2.model.Program;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ResourceBundle;
 
-public class AddBroadcastController implements Initializable{
+/**
+ * Controller for addBroadcast
+ */
+public class AddBroadcastController{
 
     @FXML
     private TextField durationTextField;
@@ -32,36 +31,39 @@ public class AddBroadcastController implements Initializable{
     private TableView<Broadcast> broadcastTableView;
 
     /**
-     *
+     * Constructor
      */
     public AddBroadcastController() {
-         database = new Database();
-        //database.setCategoryPairs();
-        //database.setChannelNames();
-
+        try {
+            database = new Database();
+        } catch (ClassNotFoundException | SQLException e) {
+            Controller.showPopupMessage("Database Error");
+        }
     }
 
+    /**
+     * Gets the program
+     * @param program - program
+     */
     public void setProgram(Program program) {
         this.program = program;
     }
 
+    /**
+     * Gets the table
+     * @param broadcastsTableView - table
+     */
     public void setTable(TableView<Broadcast> broadcastsTableView) {
         this.broadcastTableView = broadcastsTableView;
     }
 
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        durationTextField.setStyle("-fx-prompt-text-fill: derive" +
-                "(-fx-control-inner-background, -30%);");
-        starttimeTextField.setStyle("-fx-prompt-text-fill: derive" +
-                "(-fx-control-inner-background, -30%);");
-    }
-
+    /**
+     * Adds a broadcast when button is clicked
+     */
     public void addBroadcast() {
-        Broadcast b = null;
+        Broadcast broadcast = null;
         try {
-            b = database.addBroadcast(program, null, starttimeTextField
+            broadcast = database.addBroadcast(program, null, starttimeTextField
                     .getText(), durationTextField.getText(), null);
             Stage stage = (Stage) addButton.getScene().getWindow();
             stage.close();
@@ -72,10 +74,10 @@ public class AddBroadcastController implements Initializable{
             Controller.showPopupMessage("Wrong formatted input");
         }
 
-        if(b != null){
-            broadcastTableView.getItems().add(b);
+        if(broadcast != null){
+            broadcastTableView.getItems().add(broadcast);
         }
-
     }
-
 }
+
+

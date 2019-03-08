@@ -11,10 +11,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import databasOu2.model.Broadcast;
 import databasOu2.model.Program;
-
 import java.io.IOException;
-import java.net.ContentHandler;
+import java.sql.SQLException;
 
+/**
+ * Controller for broadcast
+ */
 public class BroadcastController {
     @FXML
     private TableView<Broadcast> tableViewPopup;
@@ -22,8 +24,6 @@ public class BroadcastController {
     private TableColumn<Broadcast, String> dateColumn;
     @FXML
     private TableColumn<Broadcast, String> durationColumn;
-    @FXML
-    private Button addBroadcastButton;
     @FXML
     private TextField programTextField;
 
@@ -38,32 +38,52 @@ public class BroadcastController {
 
     private Database database;
 
+    /**
+     * Constructor
+     */
     public BroadcastController(){
-        System.out.println("started");
-
-        database = new Database();
+        try {
+            database = new Database();
+        } catch (ClassNotFoundException | SQLException e) {
+            Controller.showPopupMessage("Database Error");
+        }
     }
 
+    /**
+     * Gets program
+     * @param program - program
+     */
     public void setProgram(Program program){
         this.program = program;
         programTextField.setText(program.getName());
     }
 
+    /**
+     * Gets tablevalues and insert them in table
+     */
     public void setTableValues(){
         if(broadcasts != null){
             dateColumn.setCellValueFactory(new
                     PropertyValueFactory<>("date"));
             durationColumn.setCellValueFactory(new
                     PropertyValueFactory<>("duration"));
+
             tableViewPopup.getItems().setAll(broadcasts);
         }
     }
 
+    /**
+     * Gets broadcast
+     * @param broadcasts - broadcasts
+     */
     public void setBroadcasts(ObservableList<Broadcast> broadcasts) {
         this.broadcasts = broadcasts;
     }
 
 
+    /**
+     * Opens addBroadcast gui when button is pressed
+     */
     public void openAddBroadcastPopup() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource
                 ("/databasOu2/view/addBroadcast.fxml"));
@@ -85,7 +105,9 @@ public class BroadcastController {
         }
     }
 
-
+    /**
+     * Deletes a broadcast from the table
+     */
     public void deleteBroadcast() {
         broadcast = tableViewPopup.getSelectionModel().getSelectedItem();
         System.out.println(tableViewPopup.getSelectionModel().getSelectedItem());
@@ -97,6 +119,9 @@ public class BroadcastController {
         }
     }
 
+    /**
+     * Opens the edit broadcast Gui when button is pressed
+     */
     public void openEditBroadcast(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource
                 ("/databasOu2/view/editBroadcast.fxml"));

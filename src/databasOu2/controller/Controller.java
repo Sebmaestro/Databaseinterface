@@ -18,12 +18,15 @@ import databasOu2.model.Program;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for main GUI window
+ */
 public class Controller implements Initializable{
     private Database database;
-    private boolean wasInit;
 
     @FXML
     private Menu channels;
@@ -39,15 +42,25 @@ public class Controller implements Initializable{
     private TextField channelTextField;
 
 
-
+    /**
+     * Constructor
+     */
     public Controller() {
-        database = new Database();
+        try {
+            database = new Database();
+        } catch (ClassNotFoundException | SQLException e) {
+            showPopupMessage("Database Error");
+        }
         database.setChannelNames();
         database.setCategoryPairs();
-        wasInit = false;
         database.createTriggerFunction();
     }
 
+    /**
+     * Initializes the menu when program is ran
+     * @param location - dont know
+     * @param resources - no idea
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ArrayList<String> channelNames = database.getChannelNames();
@@ -74,6 +87,9 @@ public class Controller implements Initializable{
         }
     }
 
+    /**
+     * Gets program double clicked on and opens the broadcasts
+     */
     @FXML
     private void getDoubleClickedProgram() {
 
@@ -86,6 +102,9 @@ public class Controller implements Initializable{
         });
     }
 
+    /**
+     * Opens add program GUI when button is clicked
+     */
     public void openAddProgramPopup() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource
                 ("/databasOu2/view/addProgram.fxml"));
@@ -95,9 +114,8 @@ public class Controller implements Initializable{
             Parent root = loader.load();
 
 
-            AddProgramController big = loader.getController();
-            big.init();
-            big.setTableView(tableView);
+            AddProgramController addProgramController = loader.getController();
+            addProgramController.setTableView(tableView);
 
 
             Stage stage = new Stage();
@@ -109,6 +127,9 @@ public class Controller implements Initializable{
         }
     }
 
+    /**
+     * Deletes a program
+     */
     public void deleteProgram() {
 
         Program p = tableView.getSelectionModel().getSelectedItem();
@@ -121,8 +142,12 @@ public class Controller implements Initializable{
         }
     }
 
-
-    public void openBroadcastPopup(ObservableList<Broadcast> broadcasts, Program p){
+    /**
+     * Opens the broadcast GUI
+     * @param broadcasts - broadcasts
+     * @param program - program
+     */
+    public void openBroadcastPopup(ObservableList<Broadcast> broadcasts, Program program){
         FXMLLoader loader = new FXMLLoader(getClass().getResource
                 ("/databasOu2/view/broadcast.fxml"));
 
@@ -130,7 +155,7 @@ public class Controller implements Initializable{
             Parent root = loader.load();
 
             BroadcastController broadCtrl = loader.getController();
-            broadCtrl.setProgram(p);
+            broadCtrl.setProgram(program);
             broadCtrl.setBroadcasts(broadcasts);
             broadCtrl.setTableValues();
 
@@ -143,6 +168,9 @@ public class Controller implements Initializable{
         }
     }
 
+    /**
+     * Opens the edit program GUI
+     */
     public void openEditProgram(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource
                 ("/databasOu2/view/editProgram.fxml"));
@@ -175,6 +203,10 @@ public class Controller implements Initializable{
         }
     }
 
+    /**
+     * Shows a popup with a message
+     * @param str - string
+     */
     public static void showPopupMessage(String str) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(str);

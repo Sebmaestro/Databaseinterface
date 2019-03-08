@@ -1,6 +1,8 @@
 package databasOu2.model;
 
-
+/**
+ * Holds data for broadcast
+ */
 public class Broadcast {
     private String programName;
     private String tagline;
@@ -9,6 +11,15 @@ public class Broadcast {
     private String imageURL;
     private int id;
 
+    /**
+     * Constructor
+     * @param programName - name
+     * @param tagline - tagline
+     * @param dateString - date
+     * @param durationString - duration
+     * @param imageURL - image
+     * @param id - id
+     */
     public Broadcast(String programName, String tagline, String dateString, String durationString, String imageURL, int id) {
         this.programName = programName;
         this.tagline = tagline;

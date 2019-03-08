@@ -1,5 +1,8 @@
 package databasOu2.model;
 
+/**
+ * Holds all the info for program
+ */
 public class Program {
 
     private String name;
@@ -10,7 +13,16 @@ public class Program {
     private String url;
     private int id;
 
-
+    /**
+     * Constructor
+     * @param name name
+     * @param category category
+     * @param editor editor
+     * @param tagline big
+     * @param email @snabelA
+     * @param url bild
+     * @param id id
+     */
     public Program(String name, String category, String editor, String tagline, String email, String url, int id) {
         this.id = id;
         this.name = name;
@@ -29,24 +41,8 @@ public class Program {
         return name;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
     public String getEditor() {
         return editor;
-    }
-
-    public String getTagline() {
-        return tagline;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getUrl() {
-        return url;
     }
 
     public void setName(String name) {
@@ -65,6 +61,5 @@ public class Program {
     public String toString() {
         return "Name: " + name + " Category: " + category + " Editor: " +
                 editor + " hej";
-
     }
 }

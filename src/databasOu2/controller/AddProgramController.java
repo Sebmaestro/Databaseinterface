@@ -13,10 +13,14 @@ import databasOu2.model.Database;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for addProgram
+ */
 public class AddProgramController implements Initializable{
     Database database;
 
@@ -38,20 +42,28 @@ public class AddProgramController implements Initializable{
     private ArrayList<String> channelList;
     private ArrayList<String> categoryList;
 
+    /**
+     * Constructor
+     */
     public AddProgramController() {
-        database = new Database();
+        try {
+            database = new Database();
+        } catch (ClassNotFoundException | SQLException e) {
+            Controller.showPopupMessage("Database Error");
+        }
         database.setChannelNames();
         database.setCategoryPairs();
         channelMap = database.getChannelNamesId();
         categoryMap = database.getCategoryIdNames();
         channelList = database.getChannelNames();
         categoryList = database.getCategoryNames();
-
-        System.out.println("Biggam");
-
-
     }
 
+    /**
+     * Sets the names of the channel and category combobox
+     * @param location - No idea
+     * @param resources - Still no
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> programObservable = FXCollections.observableArrayList();
@@ -65,11 +77,18 @@ public class AddProgramController implements Initializable{
         categoryCombo.setItems(categoryObservable);
     }
 
+    /**
+     * Gets the table
+     * @param tableView - table
+     */
     public void setTableView(TableView<Program> tableView){
         this.tableView = tableView;
     }
 
-    public void setAddProgramButton() {
+    /**
+     * Adds program when button is pressed
+     */
+    public void addProgram() {
         String channel = channelCombo.getValue();
         String category = categoryCombo.getValue();
 
@@ -83,10 +102,4 @@ public class AddProgramController implements Initializable{
         Stage stage = (Stage) addProgramButton.getScene().getWindow();
         stage.close();
     }
-
-    public void init() {
-
-    }
-
-
 }

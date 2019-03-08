@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.text.ParseException;
 
+/**
+ * Controller for editBroadcast
+ */
 public class EditBroadcastController {
     private TableView<Broadcast> broadcastTableView;
     private Broadcast broadcast;
@@ -18,21 +21,33 @@ public class EditBroadcastController {
 
     @FXML
     private TextField durationTextField;
-
     @FXML
     private Button editButton;
-
     @FXML
     private TextField starttimeTextField;
 
+    /**
+     * Constructor
+     */
     public EditBroadcastController() {
-        database = new Database();
+        try {
+            database = new Database();
+        } catch (ClassNotFoundException | SQLException e) {
+            Controller.showPopupMessage("Database Error");
+        }
     }
 
+    /**
+     * Gets the table
+     * @param broadcastTableView - table
+     */
     public void setTable(TableView<Broadcast> broadcastTableView) {
         this.broadcastTableView = broadcastTableView;
     }
 
+    /**
+     * Edit the broadcast when button is pressed
+     */
     public void editBroadcast(){
         try {
             database.editBroadcast(broadcast, starttimeTextField.
@@ -50,6 +65,10 @@ public class EditBroadcastController {
         }
     }
 
+    /**
+     * Gets the broadcast and sets the fields with info
+     * @param broadcast - broadcast
+     */
     public void setBroadcast(Broadcast broadcast){
         this.broadcast = broadcast;
 
