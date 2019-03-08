@@ -442,6 +442,9 @@ public class Database {
     }
 
     public void editBroadcast(Broadcast broadcast, String starttime, String durationString) throws SQLException, ParseException, IllegalArgumentException{
+
+        System.out.println(starttime+" "+durationString);
+
         Timestamp broadcast_date = Timestamp.valueOf(starttime);
 
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");

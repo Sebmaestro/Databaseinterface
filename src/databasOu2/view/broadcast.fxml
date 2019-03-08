@@ -38,10 +38,11 @@
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font></TextField>
-      <HBox alignment="CENTER" layoutX="126.0" layoutY="359.0" prefHeight="27.0" prefWidth="233.0" spacing="10.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="126.0" AnchorPane.rightAnchor="126.0">
+      <HBox alignment="CENTER" layoutX="60.0" layoutY="359.0" prefHeight="27.0" prefWidth="366.0" spacing="10.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="59.0">
          <children>
             <Button fx:id="addBroadcastButton" mnemonicParsing="false" onAction="#openAddBroadcastPopup" text="Add broadcast" />
             <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteBroadcast" text="Delete broadcast" />
+            <Button fx:id="editBroadcastButton" mnemonicParsing="false" onAction="#openEditBroadcast" text="Edit broadcast" />
          </children>
       </HBox>
    </children>

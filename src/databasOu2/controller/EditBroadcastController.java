@@ -3,8 +3,10 @@ package databasOu2.controller;
 import databasOu2.model.Broadcast;
 import databasOu2.model.Database;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -15,10 +17,16 @@ public class EditBroadcastController {
     private Database database;
 
     @FXML
-    private TextField currentStarttimeTextField;
+    private TextField durationTextField;
 
     @FXML
-    private TextField currentDurationTextField;
+    private Button editButton;
+
+    @FXML
+    private TextField currentProgramTextField;
+
+    @FXML
+    private TextField starttimeTextField;
 
     public EditBroadcastController() {
         database = new Database();
@@ -28,10 +36,15 @@ public class EditBroadcastController {
         this.broadcastTableView = broadcastTableView;
     }
 
-    public void editProgram(){
+    public void editBroadcast(){
         try {
-            database.editBroadcast(broadcast, currentStarttimeTextField.
-                    getText(), currentDurationTextField.getText());
+            database.editBroadcast(broadcast, starttimeTextField.
+                    getText(), durationTextField.getText());
+            broadcastTableView.refresh();
+            Stage stage = (Stage) editButton.getScene().getWindow();
+            stage.close();
+
+
         } catch (SQLException e) {
             Controller.showPopupMessage("There is already a broadcast at the " +
                     "specified time for this channel");
@@ -43,7 +56,7 @@ public class EditBroadcastController {
     public void setBroadcast(Broadcast broadcast){
         this.broadcast = broadcast;
 
-        currentStarttimeTextField.setText(this.broadcast.getDate());
-        currentDurationTextField.setText(this.broadcast.getDuration());
+        starttimeTextField.setText(this.broadcast.getDate());
+        durationTextField.setText(this.broadcast.getDuration());
     }
 }
