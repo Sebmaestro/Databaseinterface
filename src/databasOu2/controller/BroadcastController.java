@@ -98,6 +98,7 @@ public class BroadcastController {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setTitle("Add broadcast");
             stage.show();
 
         } catch (IOException e) {
@@ -140,6 +141,7 @@ public class BroadcastController {
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
+                stage.setTitle("Edit broadcast");
                 stage.show();
             }
 

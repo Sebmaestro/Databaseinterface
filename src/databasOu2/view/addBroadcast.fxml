@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="messageTextArea" focusTraversable="true" prefHeight="400.0" prefWidth="241.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databasOu2.controller.AddBroadcastController">
+<AnchorPane fx:id="messageTextArea" focusTraversable="true" prefHeight="399.0" prefWidth="291.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databasOu2.controller.AddBroadcastController">
    <children>
       <TextField fx:id="starttimeTextField" layoutX="18.0" layoutY="150.0" prefHeight="25.0" prefWidth="199.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.0" />
       <TextField fx:id="durationTextField" layoutX="18.0" layoutY="215.0" prefHeight="25.0" prefWidth="199.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.0" />

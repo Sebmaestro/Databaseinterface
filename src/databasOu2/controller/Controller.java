@@ -161,6 +161,7 @@ public class Controller implements Initializable{
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root, 520,900));
+            stage.setTitle("Broadcasts");
             stage.show();
 
         } catch (IOException e) {
@@ -195,6 +196,7 @@ public class Controller implements Initializable{
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
+                stage.setTitle("Edit program");
                 stage.show();
             }
 

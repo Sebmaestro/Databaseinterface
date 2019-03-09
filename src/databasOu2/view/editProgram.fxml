@@ -7,7 +7,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databasOu2.controller.EditProgramController">
    <children>
       <Button fx:id="editButton" layoutX="274.0" layoutY="361.0" mnemonicParsing="false" onAction="#editPressed" text="Edit" />
@@ -33,10 +32,10 @@
             </VBox>
          </children>
       </HBox>
-      <TextField fx:id="currentProgramTextField" editable="false" layoutX="1.0" layoutY="14.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="451.0">
+      <Label fx:id="currentProgramLabel" layoutX="1.0" layoutY="14.0" text="Label">
          <font>
-            <Font name="System Bold" size="15.0" />
+            <Font size="18.0" />
          </font>
-      </TextField>
+      </Label>
    </children>
 </AnchorPane>

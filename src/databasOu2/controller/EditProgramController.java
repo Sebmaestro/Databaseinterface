@@ -20,9 +20,9 @@ public class EditProgramController {
     @FXML
     private ComboBox<String> categoryCombo;
     @FXML
-    private TextField currentProgramTextField;
-    @FXML
     private Button editButton;
+    @FXML
+    private Label currentProgramLabel;
 
     private TableView<Program> programTableView;
 
@@ -61,7 +61,7 @@ public class EditProgramController {
     public void setProgram(Program program) {
         this.program = program;
 
-        currentProgramTextField.setText(program.getName());
+        currentProgramLabel.setText(program.getName());
 
         nameTextField.setText(program.getName());
         editorTextField.setText(program.getEditor());
