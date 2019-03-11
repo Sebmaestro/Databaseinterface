@@ -122,9 +122,9 @@ public class Database {
                 channelNamesId.put(resString, resInt);
             }
 
-            System.out.println(channelNames);
-            System.out.println(channelNamesId.keySet());
-            System.out.println(channelNamesId);
+            //System.out.println(channelNames);
+            //System.out.println(channelNamesId.keySet());
+            //System.out.println(channelNamesId);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -149,7 +149,7 @@ public class Database {
                 int i = 5;
             }
 
-            System.out.println(categoryIdNames);
+            //System.out.println(categoryIdNames);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -217,8 +217,8 @@ public class Database {
                 SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
                 String dateString = timestamp.toString();
                 dateString = dateString.replace(".0", "");
-                System.out.println(timestamp);
-                System.out.println(dateString);
+                //System.out.println(timestamp);
+                //System.out.println(dateString);
 
                 long durationTime = resultSet.getInt(3) * 1000;
                 formatter = new SimpleDateFormat("HH:mm:ss");
@@ -399,6 +399,7 @@ public class Database {
         p.setInt(5, duration);
         p.setString(6, image_url);
         p.executeUpdate();
+
         //connection.commit();
         b = new Broadcast(program.getName(), tagline, starttime, durationString,
                 image_url, primaryKey+1);

@@ -111,7 +111,8 @@ public class BroadcastController {
      */
     public void deleteBroadcast() {
         broadcast = tableViewPopup.getSelectionModel().getSelectedItem();
-        System.out.println(tableViewPopup.getSelectionModel().getSelectedItem());
+        //System.out.println(tableViewPopup.getSelectionModel()
+        // .getSelectedItem());
         if (broadcast == null) {
             Controller.showPopupMessage("Please choose a program before deletion");
         } else {
@@ -129,7 +130,8 @@ public class BroadcastController {
 
         try {
             broadcast = tableViewPopup.getSelectionModel().getSelectedItem();
-            System.out.println(tableViewPopup.getSelectionModel().getSelectedItem());
+            //System.out.println(tableViewPopup.getSelectionModel()
+            // .getSelectedItem());
             if (broadcast == null) {
                 Controller.showPopupMessage("Please choose a program before editing");
             } else {

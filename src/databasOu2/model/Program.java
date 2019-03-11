@@ -57,6 +57,22 @@ public class Program {
         this.editor = editor;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public String getTagline() {
+        return tagline;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
     @Override
     public String toString() {
         return "Name: " + name + " Category: " + category + " Editor: " +

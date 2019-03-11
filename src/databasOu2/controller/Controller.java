@@ -49,6 +49,7 @@ public class Controller implements Initializable{
         try {
             database = new Database();
         } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
             showPopupMessage("Database Error");
         }
         database.setChannelNames();
@@ -96,8 +97,10 @@ public class Controller implements Initializable{
         tableView.setOnMouseClicked((MouseEvent event) -> { //Här är lamnda :)
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
                 Program p = tableView.getSelectionModel().getSelectedItem();
-                openBroadcastPopup(database.getBroadcastFromProgram(p.getId(),
-                        p.getName()), p);
+                if (p != null) {
+                    openBroadcastPopup(database.getBroadcastFromProgram(p.getId(),
+                            p.getName()), p);
+                }
             }
         });
     }
@@ -133,7 +136,7 @@ public class Controller implements Initializable{
     public void deleteProgram() {
 
         Program p = tableView.getSelectionModel().getSelectedItem();
-        System.out.println(tableView.getSelectionModel().getSelectedItem());
+        //System.out.println(tableView.getSelectionModel().getSelectedItem());
         if (p == null) {
             showPopupMessage("Please choose a program before deletion");
         } else {
